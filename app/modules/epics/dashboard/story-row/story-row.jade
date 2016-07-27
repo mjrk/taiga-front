@@ -16,7 +16,7 @@
             tg-nav="project-userstories-detail:project=vm.project.slug,ref=vm.story.get('ref')"
             ng-attr-title="{{::vm.story.get('subject')}}"
         ) {{::vm.story.get('subject')}}
-        span.story-pill [epic color]
+        span.story-pill
     .project(ng-if="vm.column.project") {{::vm.story.getIn(['project_extra_info', 'name'])}}
     .sprint(ng-if="vm.column.sprint") {{::vm.story.get('milestone_name')}}
     .assigned(
@@ -43,4 +43,4 @@
         .progress-status(
             ng-if="::vm.percentage"
             ng-attr-width="::vm.percentage"
-        ) {{::vm.percentage}}
+        )

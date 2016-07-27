@@ -1,10 +1,14 @@
-.epic-row {
+@import '../../../../styles/dependencies/mixins/epics-dashboard';
+
+.story-row {
     @include font-size(small);
+    @include epics-table;
     align-items: center;
     background: $white;
     border-bottom: 1px solid $whitish;
     cursor: pointer;
     display: flex;
+    margin-left: 2rem;
     transition: background .2s;
     &:hover {
         background: rgba($primary-light, .05);
@@ -21,19 +25,6 @@
             text-decoration: line-through;
         }
     }
-    &.unfold {
-        .name {
-            .icon {
-                transform: rotate(0deg);
-            }
-        }
-    }
-    .name {
-        .icon {
-            transform: rotate(180deg);
-            transition: all .2s;
-        }
-    }
     .icon-drag {
         @include svg-size(.75rem);
         cursor: move;
@@ -41,26 +32,16 @@
         opacity: 0;
         transition: opacity .1s;
     }
-    .epic-pill {
-        @include font-type(light);
-        @include font-size(xsmall);
+    .name {
+        flex-basis: 19vw;
+    }
+    .story-pill {
         background: $grayer;
-        border-radius: .25rem;
-        color: $white;
-        margin: 0 .5rem;
-        padding: .1rem .25rem;
-    }
-    .status {
-        cursor: pointer;
-        position: relative;
-        button {
-            background: none;
-        }
-    }
-    .icon-arrow-down {
-        @include svg-size(.7rem);
-        fill: $gray-light;
-        margin-left: .1rem;
+        border-radius: 50%;
+        content: '';
+        height: .5rem;
+        margin-left: .5rem;
+        width: .5rem;
     }
     .progress-bar,
     .progress-status {
@@ -94,30 +75,5 @@
     }
     .is-unassigned {
         color: $gray-light;
-    }
-    .epic-statuses {
-        @include font-type(light);
-        @include font-size(small);
-        background: rgba($blackish, .9);
-        border-bottom: 1px solid $grayer;
-        box-shadow: 3px 3px 2px rgba($black, .1);
-        color: $white;
-        left: 0;
-        list-style-type: none;
-        margin: 0;
-        position: absolute;
-        top: 2.5rem;
-        width: 200px;
-        z-index: 99;
-        &:last-child {
-            border: 0;
-        }
-        li {
-            padding: .5rem;
-            &:hover {
-                color: $primary-light;
-                transition: color .3s linear;
-            }
-        }
     }
 }

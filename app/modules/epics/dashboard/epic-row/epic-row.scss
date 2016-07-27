@@ -1,4 +1,7 @@
+@import '../../../../styles/dependencies/mixins/epics-dashboard';
+
 .epic-row {
+    @include epics-table;
     @include font-size(small);
     align-items: center;
     background: $white;
