@@ -15,10 +15,15 @@
     .progress {
         padding: 1rem .5rem;
     }
-
-    .assigned,
-    .project,
     .vote {
+        flex-basis: 60px;
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-wrap: wrap;
+        text-align: center;
+    }
+    .assigned,
+    .project {
         flex-basis: 100px;
         flex-grow: 0;
         flex-shrink: 0;

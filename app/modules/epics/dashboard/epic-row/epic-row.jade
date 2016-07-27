@@ -1,7 +1,8 @@
 .epic-row(
-    ng-class="{'is-blocked':  vm.epic.get('is_blocked'), 'is-closed': vm.epic.get('is_closed')}"
+    ng-class="{'is-blocked':  vm.epic.get('is_blocked'), 'is-closed': vm.epic.get('is_closed'), 'unfold': vm.displayUserStories}"
+    ng-click="vm.requestUserStories(vm.epic)"
 )
-    tg-svg(
+    tg-svg.icon-drag(
         svg-icon="icon-drag"
     )
     .vote(
@@ -16,11 +17,15 @@
             tg-nav="project-epic-detail:project=vm.project.get('slug')"
             ng-attr-title="{{::vm.epic.get('subject')}}"
         ) {{::vm.epic.get('subject')}}
+        span.epic-pill EPICS
+        tg-svg(
+            svg-icon="icon-arrow-down"
+            ng-if="vm.epic.getIn(['user_stories_counts', 'opened']) || vm.epic.getIn(['user_stories_counts', 'closed'])"
+        )
     
-    .project(ng-if="vm.column.project") {{::vm.epic.get('project')}}
+    .project(ng-if="vm.column.project")
     .sprint(
         ng-if="vm.column.sprint"
-        translate="EPICS.TABLE.SPRINT"
     )
     .assigned(
         ng-if="vm.column.assigned && vm.epic.get('assigned_to')"
@@ -67,4 +72,13 @@
         .progress-status(
             ng-if="::vm.percentage"
             ng-attr-width="::vm.percentage"
+        )
+.epic-stories-wrapper(ng-if="vm.displayUserStories && vm.epicStories")
+    
+    .epic-story(tg-repeat="story in vm.epicStories track by story.get('id')")
+        tg-story-row(
+            epic="vm.epic"
+            story="story"
+            project="vm.project"
+            column="vm.column"
         )
