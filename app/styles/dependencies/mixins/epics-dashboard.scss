@@ -38,8 +38,11 @@
     .progress {
         flex-basis: 20vw;
         flex-grow: 1;
-        flex-shrink: 2;
+        flex-shrink: 1;
         max-width: 40vw;
+    }
+    .progress {
+        flex-shrink: 3;
     }
     .name,
     .sprint {

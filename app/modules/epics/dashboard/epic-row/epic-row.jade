@@ -13,10 +13,11 @@
         span {{::vm.epic.get('total_voters')}}
 
     .name(ng-if="vm.column.name")
+        - var hash = "#";
         a(
             tg-nav="project-epic-detail:project=vm.project.get('slug')"
             ng-attr-title="{{::vm.epic.get('subject')}}"
-        ) {{::vm.epic.get('subject')}}
+        ) #{hash}{{::vm.epic.get('ref')}} {{::vm.epic.get('subject')}}
         span.epic-pill(
             ng-style="::{'background-color': vm.epic.get('color')}"
             translate="EPICS.EPIC"

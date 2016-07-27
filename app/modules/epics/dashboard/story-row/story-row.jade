@@ -11,13 +11,21 @@
         tg-svg(svg-icon='icon-upvote')
         span {{::vm.story.get('total_voters')}}
         
-    .name(ng-if="vm.column.name") 
+    .name(ng-if="vm.column.name")
+        - var hash = "#";
         a(
             tg-nav="project-userstories-detail:project=vm.project.slug,ref=vm.story.get('ref')"
             ng-attr-title="{{::vm.story.get('subject')}}"
-        ) {{::vm.story.get('subject')}}
-        span.story-pill
-    .project(ng-if="vm.column.project") {{::vm.story.getIn(['project_extra_info', 'name'])}}
+        ) #{hash}{{::vm.story.get('ref')}} {{::vm.story.get('subject')}}
+        .story-pill(ng-style="::{'background-color': vm.epic.get('color')}")
+    .project(
+        ng-if="vm.column.project"
+        tg-nav="project:project=vm.story.getIn(['project_extra_info', 'slug'])"
+    )
+        img(
+            tg-project-logo-small-src="::vm.story.get('project_extra_info')"
+            alt="{{::vm.story.getIn(['project_extra_info', 'name'])}}"
+        )
     .sprint(ng-if="vm.column.sprint") {{::vm.story.get('milestone_name')}}
     .assigned(
         ng-if="vm.column.assigned && vm.story.get('assigned_to')"
