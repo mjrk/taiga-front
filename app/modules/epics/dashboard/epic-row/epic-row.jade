@@ -8,38 +8,41 @@
     .vote(
         ng-if="vm.column.votes"
         ng-class="{'is-voter': vm.epic.get('is_voter')}"
-    ) 
+    )
         tg-svg(svg-icon='icon-upvote')
         span {{::vm.epic.get('total_voters')}}
-        
-    .name(ng-if="vm.column.name") 
+
+    .name(ng-if="vm.column.name")
         a(
             tg-nav="project-epic-detail:project=vm.project.get('slug')"
             ng-attr-title="{{::vm.epic.get('subject')}}"
         ) {{::vm.epic.get('subject')}}
-        span.epic-pill EPICS
+        span.epic-pill(
+            ng-style="::{'background-color': vm.epic.get('color')}"
+            translate="COMMON.EPIC_PILL"
+        )
         tg-svg(
             svg-icon="icon-arrow-down"
             ng-if="vm.epic.getIn(['user_stories_counts', 'opened']) || vm.epic.getIn(['user_stories_counts', 'closed'])"
         )
-    
+
     .project(ng-if="vm.column.project")
     .sprint(
         ng-if="vm.column.sprint"
     )
     .assigned(
         ng-if="vm.column.assigned && vm.epic.get('assigned_to')"
-    ) 
+    )
         img(
             ng-if="vm.epic.getIn(['assigned_to_extra_info', 'photo'])"
             ng-src="{{vm.epic.getIn(['assigned_to_extra_info', 'photo'])}}"
             alt="{{::vm.epic.getIn(['assigned_to_extra_info', 'full_name_display'])}}"
-        )    
+        )
         img(
             ng-if="!vm.epic.getIn(['assigned_to_extra_info', 'photo'])"
             ng-src="https://www.gravatar.com/avatar/{{vm.epic.getIn(['assigned_to_extra_info', 'gravatar_id'])}}"
             alt="{{::vm.epic.getIn(['assigned_to_extra_info', 'full_name_display'])}}"
-        )    
+        )
     .assigned(
         ng-if="vm.column.assigned && !vm.epic.get('assigned_to')"
         ng-class="{'is-unassigned': !vm.epic.get('assigned_to')}"
@@ -61,7 +64,7 @@
             tg-svg(
                 svg-icon="icon-arrow-down"
             )
-            
+
         ul.epic-statuses(ng-show="displayStatusList")
             li(
                 ng-repeat="status in vm.project.epic_statuses | orderBy:'order'"
@@ -74,7 +77,7 @@
             ng-attr-width="::vm.percentage"
         )
 .epic-stories-wrapper(ng-if="vm.displayUserStories && vm.epicStories")
-    
+
     .epic-story(tg-repeat="story in vm.epicStories track by story.get('id')")
         tg-story-row(
             epic="vm.epic"
