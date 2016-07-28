@@ -30,6 +30,7 @@ class EpicsDashboardController
     constructor: (@rs, @resources, @params, @errorHandlingService) ->
         @.sectionName = "Epics"
         @._loadProject()
+        @.createEpic = false
 
     _loadProject: () ->
         return @rs.projects.getBySlug(@params.pslug).then (project) =>
@@ -43,7 +44,8 @@ class EpicsDashboardController
         return @resources.epics.list(projectId).then (epics) =>
             @.epics = epics
 
-    addNewEpic: () ->
-        console.log 'Add new Epic'
+    onCreateEpic: () ->
+        @.createEpic = true
+        console.log @.createEpic
 
 module.controller("EpicsDashboardCtrl", EpicsDashboardController)

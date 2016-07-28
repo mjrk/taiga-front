@@ -1,0 +1,11 @@
+.create-epic-wrapper {
+    @include font-size(xlarge);
+    background: rgba($white, .95);
+    bottom: 0;
+    display: flex;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: -40px;
+    z-index: 999;
+}
