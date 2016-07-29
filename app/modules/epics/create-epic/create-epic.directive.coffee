@@ -26,7 +26,9 @@ CreateEpicDirective = () ->
         controller: "CreateEpicCtrl",
         controllerAs: "vm",
         bindToController: true,
-        scope: {}
+        scope: {
+            project: '=' 
+        }
     }
 
 CreateEpicDirective.$inject = []

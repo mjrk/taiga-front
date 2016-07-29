@@ -23,6 +23,9 @@ class CreateEpicController
     @.$inject = []
 
     constructor: () ->
-        console.log 'CreateEpicCtrl'
+        @.attachments = Immutable.List()
+
+    createEpic: () ->
+        console.log @.newEpic
 
 module.controller("CreateEpicCtrl", CreateEpicController)
