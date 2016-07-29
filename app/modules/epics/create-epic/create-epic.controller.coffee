@@ -20,12 +20,19 @@
 module = angular.module("taigaEpics")
 
 class CreateEpicController
-    @.$inject = []
+    @.$inject = [
+        "tgResources",
+        "$tgConfirm",
+    ]
 
-    constructor: () ->
+    constructor: (@rs, @confirm) ->
         @.attachments = Immutable.List()
 
     createEpic: () ->
-        console.log @.newEpic
+        @.newEpic.project = @.project.id
+        return @rs.epics.post(@.newEpic).then () =>
+            @confirm.notify("success")
+            @.onReloadEpics()
+
 
 module.controller("CreateEpicCtrl", CreateEpicController)

@@ -27,7 +27,8 @@ CreateEpicDirective = () ->
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            project: '=' 
+            project: '=',
+            onReloadEpics: '&'
         }
     }
 

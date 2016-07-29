@@ -25,7 +25,7 @@ class EpicsDashboardController
         "tgResources",
         "$routeParams",
         "tgErrorHandlingService",
-        "tgLightboxFactory"
+        "tgLightboxFactory",
     ]
 
     constructor: (@rs, @resources, @params, @errorHandlingService, @lightboxFactory) ->
@@ -49,8 +49,10 @@ class EpicsDashboardController
         @lightboxFactory.create('tg-create-epic', {
             "class": "lightbox lightbox-create-epic"
             "project": "project"
+            "on-reload-epics": "onReloadEpics"
         }, {
             "project": @.project
+            "onReloadEpics": @_loadEpics
         })
 
 module.controller("EpicsDashboardCtrl", EpicsDashboardController)
