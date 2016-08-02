@@ -19,20 +19,34 @@
 
 class AssignedToController
     @.$inject = [
-        "tgLightboxFactory"
+        "tgLightboxFactory",
+        "lightboxService",
     ]
 
-    constructor: (@lightboxFactory) ->
+    constructor: (@lightboxFactory, @lightboxService) ->
         @.has_permissions = _.includes(@.project.my_permissions, 'modify_epic')
+
+    _closeAndRemoveAssigned: () ->
+        @lightboxService.closeAll()
+        @.onRemoveAssigned()
+
+    _closeAndAssign: (member) ->
+        console.log member
+        @lightboxService.closeAll()
+        @.onAssignTo(member)
 
     onSelectAssignedTo: (assigned, project) ->
         @lightboxFactory.create('tg-assigned-to-selector', {
             "class": "lightbox lightbox-assigned-to-selector open",
             "assigned": "assigned",
-            "project": "project"
+            "project": "project",
+            "on-remove-assigned": "onRemoveAssigned()"
+            "on-assign-to": "onAssignTo(member)"
         }, {
             "assigned": @.assignedTo,
             "project": @.project
+            "onRemoveAssigned": @._closeAndRemoveAssigned.bind(this)
+            "onAssignTo": @._closeAndAssign.bind(this, {'member': 'member'})
         })
 
 angular.module('taigaComponents').controller('AssignedToCtrl', AssignedToController)
