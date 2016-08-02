@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-# File: attchment.controller.coffee
+# File: assigned-to.controller.coffee
 ###
 
 class AssignedToController
@@ -31,9 +31,8 @@ class AssignedToController
         @.onRemoveAssigned()
 
     _closeAndAssign: (member) ->
-        console.log member
         @lightboxService.closeAll()
-        @.onAssignTo(member)
+        @.onAssignTo({'member': member})
 
     onSelectAssignedTo: (assigned, project) ->
         @lightboxFactory.create('tg-assigned-to-selector', {
@@ -41,12 +40,12 @@ class AssignedToController
             "assigned": "assigned",
             "project": "project",
             "on-remove-assigned": "onRemoveAssigned()"
-            "on-assign-to": "onAssignTo(member)"
+            "on-assign-to": "assignTo(member)"
         }, {
             "assigned": @.assignedTo,
-            "project": @.project
-            "onRemoveAssigned": @._closeAndRemoveAssigned.bind(this)
-            "onAssignTo": @._closeAndAssign.bind(this, {'member': 'member'})
+            "project": @.project,
+            "onRemoveAssigned": @._closeAndRemoveAssigned.bind(this),
+            "assignTo": @._closeAndAssign.bind(this)
         })
 
 angular.module('taigaComponents').controller('AssignedToCtrl', AssignedToController)

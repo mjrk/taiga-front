@@ -20,10 +20,8 @@ tg-lightbox-close
                 svg-title-translate="COMMON.ASSIGNED_TO.REMOVE_ASSIGNED"
                 ng-click="vm.onRemoveAssigned()"
             )
-        li(
-            ng-repeat="member in vm.nonAssignedMembers | filter: vm.assignToMember.name | limitTo:6"
-        )
+        li(ng-repeat="member in vm.nonAssignedMembers | filter: vm.assignToMember.name | limitTo:6")
             tg-assigned-item.assigned-members-option(
                 member="member"
-                ng-click="vm.onAssignTo(member)"
+                ng-click="vm.onAssignTo({'member': member})"
             )
