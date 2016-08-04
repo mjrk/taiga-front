@@ -68,7 +68,8 @@ class BacklogController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.F
     milestonesOrder: {}
 
     constructor: (@scope, @rootscope, @repo, @confirm, @rs, @params, @q, @location, @appMetaService, @navUrls,
-                  @events, @analytics, @translate, @loading, @rs2, @modelTransform, @errorHandlingService, @storage, @filterRemoteStorageService) ->
+                  @events, @analytics, @translate, @loading, @rs2, @modelTransform, @errorHandlingService,
+                  @storage, @filterRemoteStorageService) ->
         bindMethods(@)
 
         @.backlogOrder = {}
@@ -116,11 +117,13 @@ class BacklogController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.F
         @scope.$on "usform:bulk:success", =>
             @.loadUserstories(true)
             @.loadProjectStats()
+            @confirm.notify("success")
             @analytics.trackEvent("userstory", "create", "bulk create userstory on backlog", 1)
 
         @scope.$on "sprintform:create:success", =>
             @.loadSprints()
             @.loadProjectStats()
+            @confirm.notify("success")
             @analytics.trackEvent("sprint", "create", "create sprint on backlog", 1)
 
         @scope.$on "usform:new:success", =>
@@ -128,6 +131,7 @@ class BacklogController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.F
             @.loadProjectStats()
 
             @rootscope.$broadcast("filters:update")
+            @confirm.notify("success")
             @analytics.trackEvent("userstory", "create", "create userstory on backlog", 1)
 
         @scope.$on "sprintform:edit:success", =>
@@ -340,11 +344,15 @@ class BacklogController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.F
         return items
 
     # --move us api behavior--
-    # if your are moving multiples USs you must use the bulk api
-    # if there is only one US you must use patch (repo.save)
-    # the new US position is the position of the previous US + 1
-    # if the previous US has a position value that it is equal to other USs, you must send all the USs with that position value only if they are before of the target position
-    #    with this USs if it's a patch you must add them to the header, if is a bulk you must send them with the other USs
+    # If your are moving multiples USs you must use the bulk api
+    # If there is only one US you must use patch (repo.save)
+    #
+    # The new US position is the position of the previous US + 1.
+    # If the previous US has a position value that it is equal to
+    # other USs, you must send all the USs with that position value
+    # only if they are before of the target position with this USs
+    # if it's a patch you must add them to the header, if is a bulk
+    # you must send them with the other USs
     moveUs: (ctx, usList, newUsIndex, newSprintId) ->
         oldSprintId = usList[0].milestone
         project = usList[0].project
@@ -414,12 +422,18 @@ class BacklogController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.F
         else if previous
             startIndex = orderList[previous.id] + 1
 
-            previousWithTheSameOrder = _.filter beforeDestination, (it) -> it[orderField] == orderList[previous.id]
+            previousWithTheSameOrder = _.filter(beforeDestination, (it) ->
+                it[orderField] == orderList[previous.id]
+            )
 
-            # we must send the USs previous to the dropped USs to tell the backend which USs are before the dropped USs,
-            # if they have the same value to order, the backend doens't know after which one do you want to drop the USs
+            # we must send the USs previous to the dropped USs to tell the backend
+            # which USs are before the dropped USs, if they have the same value to
+            # order, the backend doens't know after which one do you want to drop
+            # the USs
             if previousWithTheSameOrder.length > 1
-                setPreviousOrders = _.map previousWithTheSameOrder, (it) -> {us_id: it.id, order: orderList[it.id]}
+                setPreviousOrders = _.map(previousWithTheSameOrder, (it) ->
+                    {us_id: it.id, order: orderList[it.id]}
+                )
 
         modifiedUs = []
 
