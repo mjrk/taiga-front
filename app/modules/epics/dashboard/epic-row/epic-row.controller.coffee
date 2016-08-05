@@ -60,7 +60,7 @@ class EpicRowController
         return @rs.epics.patch(@.epic.get('id'), patch).then(onSuccess, onError)
 
     requestUserStories: (epic) ->
-        if @.displayUserStories == false
+        if !@.displayUserStories
 
             onSuccess = (data) =>
                 @.epicStories = data

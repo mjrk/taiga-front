@@ -158,20 +158,21 @@ describe "EpicRow", ->
             expect(mocks.tgConfirm.notify).have.been.calledWith('error')
             done()
 
-    # it.only "display User Stories", (done) ->
-    #     EpicRowCtrl = controller "EpicRowCtrl"
-    #     EpicRowCtrl.displayUserStories = false
-    #
-    #     EpicRowCtrl.epic = Immutable.fromJS({
-    #         id: 1
-    #     })
-    #
-    #     promise = mocks.tgResources.userstories.listInEpic.withArgs(EpicRowCtrl.epic.get('id')).promise().resolve()
-    #
-    #     EpicRowCtrl.requestUserStories(EpicRowCtrl.epic).then (data) ->
-    #         expect(EpicRowCtrl.displayUserStories).to.be.true
-    #         expect(EpicRowCtrl.epicStories).is.equal(data)
-    #         done()
+    it "display User Stories", (done) ->
+        EpicRowCtrl = controller "EpicRowCtrl"
+
+        EpicRowCtrl.displayUserStories = false
+        EpicRowCtrl.epic = Immutable.fromJS({
+            id: 1
+        })
+        data = true
+
+        promise = mocks.tgResources.userstories.listInEpic.withArgs(EpicRowCtrl.epic.get('id')).promise().resolve(data)
+
+        EpicRowCtrl.requestUserStories(EpicRowCtrl.epic).then () ->
+            expect(EpicRowCtrl.displayUserStories).to.be.true
+            expect(EpicRowCtrl.epicStories).is.equal(data)
+            done()
 
     it "display User Stories error", (done) ->
         EpicRowCtrl = controller "EpicRowCtrl"
@@ -196,3 +197,44 @@ describe "EpicRow", ->
         })
         EpicRowCtrl.requestUserStories(EpicRowCtrl.epic)
         expect(EpicRowCtrl.displayUserStories).to.be.false
+
+    it "On remove assigned", () ->
+        EpicRowCtrl = controller "EpicRowCtrl"
+        EpicRowCtrl.epic = Immutable.fromJS({
+            id: 1,
+            version: 1
+        })
+        EpicRowCtrl.patch = {
+            'assigned_to': null,
+            'version': EpicRowCtrl.epic.get('version')
+        }
+        EpicRowCtrl.onUpdateEpic = sinon.stub()
+
+        promise = mocks.tgResources.epics.patch.withArgs(EpicRowCtrl.epic.get('id'), EpicRowCtrl.patch).promise().resolve()
+
+        EpicRowCtrl.onRemoveAssigned().then () ->
+            expect(EpicRowCtrl.onUpdateEpic).to.have.been.called
+
+    it "On assign to", (done) ->
+        EpicRowCtrl = controller "EpicRowCtrl"
+        EpicRowCtrl.epic = Immutable.fromJS({
+            id: 1,
+            version: 1
+        })
+        id = EpicRowCtrl.epic.get('id')
+        version = EpicRowCtrl.epic.get('version')
+        member = {
+            id: 1
+        }
+        EpicRowCtrl.patch = {
+            assigned_to: member.id
+            version: EpicRowCtrl.epic.get('version')
+        }
+
+        EpicRowCtrl.onUpdateEpic = sinon.stub()
+
+        promise = mocks.tgResources.epics.patch.withArgs(id, EpicRowCtrl.patch).promise().resolve(member)
+        EpicRowCtrl.onAssignTo(member).then () ->
+            expect(EpicRowCtrl.onUpdateEpic).to.have.been.called
+            expect(mocks.tgConfirm.notify).have.been.calledWith('success')
+            done()
