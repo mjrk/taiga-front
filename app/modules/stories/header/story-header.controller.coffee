@@ -20,23 +20,48 @@
 module = angular.module("taigaUserStories")
 
 class StoryHeaderController
-    @.$inject = []
+    @.$inject = [
+        "$rootScope",
+        "$tgConfirm",
+        "$tgQueueModelTransformation"
+    ]
 
-    constructor: () ->
+    constructor: (@rootScope, @confirm, @modelTransform) ->
         @.editMode = false
+        @.loadingSubject = false
+        @.originalSubject = @.item.subject
 
     _checkPermissions: () ->
         @.permissions = {
             canEdit: _.includes(@.project.my_permissions, @.requiredPerm)
-            canView: _.includes(@.project.my_permissions, 'view_us')
         }
-        console.log @.permissions
 
     editSubject: (value) ->
-        console.log value
         if value
             @.editMode = true
         if !value
             @.editMode = false
+
+    onCancelEdition: (event) ->
+        if event.which == 27
+            @.item.subject = @.originalSubject
+            @.editSubject(false)
+
+    saveSubject: () ->
+        onEditSubjectSuccess = () =>
+            @.loadingSubject = false
+            @rootScope.$broadcast("object:updated")
+            @confirm.notify('success')
+
+        onEditSubjectError = () =>
+            @.loadingSubject = false
+            @confirm.notify('error')
+
+        @.editMode = false
+        @.loadingSubject = true
+        item = @.item
+        transform = @modelTransform.save (item) ->
+            return item
+        return transform.then(onEditSubjectSuccess, onEditSubjectError)
 
 module.controller("StoryHeaderCtrl", StoryHeaderController)

@@ -9,38 +9,6 @@
     }
 }
 
-.blocked-warning {
-    margin-bottom: 1rem;
-    .blocked {
-        @include font-type(text);
-        @include font-size(xlarge);
-        color: $red;
-        line-height: 2.5rem;
-        margin-bottom: .5rem;
-    }
-    .icon {
-        @include font-size(xlarge);
-        vertical-align: middle;
-    }
-    .block-description {
-        color: $grayer;
-        margin: 0;
-    }
-}
-
-.issue-nav {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-    a {
-        display: inline-block;
-    }
-    svg {
-        @include svg-size(1.2rem);
-        fill: currentColor;
-    }
-}
-
 .subheader {
     align-items: flex-start;
     display: flex;

@@ -24,10 +24,11 @@
             maxlength="500"
             autofocus
             required
-            ng-keydown="$event.which === 27 && vm.editSubject(false)"
+            ng-keydown="vm.onCancelEdition($event)"
         )
         button.edit-title-button(
-            ng-click="vm.saveSubject"
+            ng-click="vm.saveSubject()"
+            tg-loading="vm.loadingSubject"
         )
             tg-svg(
                 svg-icon="icon-save"
@@ -59,3 +60,17 @@
     span.block-description(
         ng-if="vm.item.blocked_note"
     ) {{vm.item.blocked_note}}
+
+.issue-nav
+    a(
+        ng-show="previousUrl"
+        tg-bo-href="previousUrl"
+        title="{{'US.PREVIOUS' | translate}}"
+    )
+        tg-svg(svg-icon="icon-arrow-left")
+    a(
+        ng-show="nextUrl"
+        tg-bo-href="nextUrl"
+        title="{{'US.NEXT' | translate}}"
+    )
+        tg-svg(svg-icon="icon-arrow-right")
