@@ -90,7 +90,7 @@ mixin epicSwitch(name, model)
                     +epicSwitch('switch-progress', 'vm.column.progress')
     .epics-table-body(tg-epic-sortable)
         .epics-table-body-row(tg-repeat="epic in vm.epics track by epic.get('id')")
-            tg-epic-row(
+            tg-epic-row.e2e-epic(
                 epic="epic"
                 project="vm.project"
                 column="vm.column"
