@@ -45,10 +45,17 @@ helper.epic = function() {
         getStatus: function() {
             return el.get(0).$('.e2e-epic-status').getText();
         },
-        editStatus: async function() {
+        editStatus: function() {
             el.get(0).$('.e2e-epic-status').click();
             el.get(0).$$('.e2e-edit-epic-status').last().click();
         },
+        getColumns: function() {
+            return $$('.e2e-epics-table-header > div').count();
+        },
+        removeColumns: function() {
+            $('.e2e-epics-column-button').click();
+            $$('.e2e-epics-column-dropdown .check').first().click();
+        }
     }
 
     return obj;

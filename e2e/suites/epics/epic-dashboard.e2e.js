@@ -56,4 +56,12 @@ describe('Epics Dashboard', function(){
         expect(currentStatus).to.be.not.equal(newStatus);
     });
 
+    it('remove columns from dashboard', async function() {
+        let epic = epicsHelper.epic();
+        let currentColumns = await epic.getColumns();
+        await epic.removeColumns();
+        let newColumns = await epic.getColumns();
+        expect(currentColumns).to.be.above(newColumns);
+    });
+
 })
