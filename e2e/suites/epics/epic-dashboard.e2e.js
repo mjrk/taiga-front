@@ -39,7 +39,7 @@ describe('Epics Dashboard', function(){
         expect(currentAssigned).to.be.not.equal(newAssigned);
     });
 
-    it.only('remove assigned from dashboard', async function() {
+    it('remove assigned from dashboard', async function() {
         let epic = epicsHelper.epic();
         await epic.resetAssignedTo();
         let unAssigned = await epic.removeAssignedTo();
