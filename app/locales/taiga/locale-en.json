@@ -1060,6 +1060,11 @@
             "BUTTON": "Ask this project member to become the new project owner"
         }
     },
+    "EPIC": {
+        "PAGE_TITLE": "{{epicSubject}} - Epic {{epicRef}} - {{projectName}}",
+        "PAGE_DESCRIPTION": "Status: {{epicStatus }}. Description: {{epicDescription}}",
+        "SECTION_NAME": "Epic"
+    },
     "US": {
         "PAGE_TITLE": "{{userStorySubject}} - User Story {{userStoryRef}} - {{projectName}}",
         "PAGE_DESCRIPTION": "Status: {{userStoryStatus }}. Completed {{userStoryProgressPercentage}}% ({{userStoryClosedTasks}} of {{userStoryTotalTasks}} tasks closed). Points: {{userStoryPoints}}. Description: {{userStoryDescription}}",
