@@ -17,14 +17,20 @@ div.wrapper(
                     on-upvote="ctrl.onUpvote"
                     on-downvote="ctrl.onDownvote"
                 )
-                tg-detail-header.detail-header-container(
-                    item="epic"
-                    project="project"
-                    required-perm="modify_epic"
-                    ng-class="{blocked: epic.is_blocked}"
-                    ng-if="project && epic"
-                    format="text"
-                )
+
+                .detail-header-container
+                    tg-color-selector(
+                        color="epic.color",
+                        on-select-color="ctrl.onSelectColor(color)"
+                    )
+                    tg-detail-header(
+                        item="epic"
+                        project="project"
+                        required-perm="modify_epic"
+                        ng-class="{blocked: epic.is_blocked}"
+                        ng-if="project && epic"
+                        format="text"
+                    )
             .subheader
                 tg-tag-line.tags-block(
                     ng-if="epic && project"

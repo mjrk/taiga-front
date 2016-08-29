@@ -181,6 +181,20 @@ class EpicDetailController extends mixOf(taiga.Controller, taiga.PageMixin)
 
         return @rs.epics.unwatch(@scope.epicId).then(onSuccess, onError)
 
+    onSelectColor: (color) ->
+        onSelectColorSuccess = () =>
+            @rootscope.$broadcast("object:updated")
+            @confirm.notify('success')
+
+        onSelectColorError = () =>
+            @confirm.notify('error')
+
+        transform = @modelTransform.save (epic) ->
+            epic.color = color
+            return epic
+
+        return transform.then(onSelectColorSuccess, onSelectColorError)
+
 module.controller("EpicDetailController", EpicDetailController)
 
 
