@@ -10,6 +10,7 @@ section.related-userstories
                 epic="vm.epic"
                 project="vm.project"
                 ng-class="{closed: us.get('is_closed'), blocked: us.get('is_blocked')}"
+                on-removed-related-userstories="vm.reloadRelatedUserstories()"
             )
 
         div(tg-related-userstories-create-form)

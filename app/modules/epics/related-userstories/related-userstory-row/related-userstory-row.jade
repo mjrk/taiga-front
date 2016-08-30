@@ -29,8 +29,7 @@
     )
 
 .status
-    span.userstory-status(ng-style="{'color': vm.userstory.getIn(['status_extra_info', 'color'])}")
-        {{vm.userstory.getIn(['status_extra_info', 'name'])}}
+    span.userstory-status(ng-style="{'color': vm.userstory.getIn(['status_extra_info', 'color'])}") {{vm.userstory.getIn(['status_extra_info', 'name'])}}
 
 .assigned-to-column
     figure.avatar

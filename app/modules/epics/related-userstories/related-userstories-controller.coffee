@@ -20,9 +20,13 @@
 module = angular.module("taigaEpics")
 
 class RelatedUserStoriesController
-    @.$inject = []
+    @.$inject = ["tgResources"]
 
-    constructor: (@avatarService) ->
+    constructor: (@rs) ->
         @.sectionName = "Epics"
+
+    reloadRelatedUserstories: () ->
+        @rs.userstories.listInEpic(@.epic.get('id')).then (data) =>
+            @.userstories = data
 
 module.controller("RelatedUserStoriesCtrl", RelatedUserStoriesController)

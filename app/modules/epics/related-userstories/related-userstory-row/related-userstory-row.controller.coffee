@@ -52,7 +52,9 @@ class RelatedUserstoryRowController
                     @confirm.notify("error", null, message)
                     askResponse.finish(false)
 
-                onSuccess = () => askResponse.finish()
+                onSuccess = () =>
+                    @.onRemovedRelatedUserstories()
+                    askResponse.finish()
 
                 @rs.userstories.deleteInEpic(@.epic.get('id'), @.userstory.get('id')).then(onSuccess, onError)
 
