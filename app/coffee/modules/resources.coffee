@@ -99,6 +99,7 @@ urls = {
     "epic-downvote": "/epics/%s/downvote"
     "epic-watch": "/epics/%s/watch"
     "epic-unwatch": "/epics/%s/unwatch"
+    "epic-related-userstories": "/epics/%s/related_userstories"
 
     # User stories
     "userstories": "/userstories"

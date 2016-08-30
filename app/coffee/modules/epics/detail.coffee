@@ -44,6 +44,7 @@ class EpicDetailController extends mixOf(taiga.Controller, taiga.PageMixin)
         "$tgRepo",
         "$tgConfirm",
         "$tgResources",
+        "tgResources"
         "$routeParams",
         "$q",
         "$tgLocation",
@@ -56,7 +57,7 @@ class EpicDetailController extends mixOf(taiga.Controller, taiga.PageMixin)
         "tgErrorHandlingService"
     ]
 
-    constructor: (@scope, @rootscope, @repo, @confirm, @rs, @params, @q, @location,
+    constructor: (@scope, @rootscope, @repo, @confirm, @rs, @rs2, @params, @q, @location,
                   @log, @appMetaService, @analytics, @navUrls, @translate, @modelTransform, @errorHandlingService) ->
         bindMethods(@)
 
@@ -112,6 +113,7 @@ class EpicDetailController extends mixOf(taiga.Controller, taiga.PageMixin)
     loadEpic: ->
         return @rs.epics.getByRef(@scope.projectId, @params.epicref).then (epic) =>
             @scope.epic = epic
+            @scope.immutableEpic = Immutable.fromJS(epic._attrs)
             @scope.epicId = epic.id
             @scope.commentModel = epic
 
@@ -131,11 +133,15 @@ class EpicDetailController extends mixOf(taiga.Controller, taiga.PageMixin)
                 }
                 @scope.nextUrl = @navUrls.resolve("project-epics-detail", ctx)
 
+    loadUserstories: ->
+          return @rs2.userstories.listInEpic(@scope.epicId).then (data) =>
+              @scope.userstories = data
+
     loadInitialData: ->
         promise = @.loadProject()
         return promise.then (project) =>
             @.fillUsersAndRoles(project.members, project.roles)
-            @.loadEpic()
+            @.loadEpic().then(=> @.loadUserstories())
 
     ###
     # Note: This methods (onUpvote() and onDownvote()) are related to tg-vote-button.

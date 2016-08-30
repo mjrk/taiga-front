@@ -38,13 +38,18 @@ Resource = (urlsService, http) ->
 
         params = {
             'epic': epicIid,
-            'order_by': 'epic_order',
+            'order_by': 'epic__order',
             'include_tasks': true
         }
 
         return http.get(url, params)
             .then (result) ->
                 return Immutable.fromJS(result.data)
+
+    service.deleteInEpic = (epicId, userstoryId) ->
+        url = urlsService.resolve("epic-related-userstories", epicId) + "/#{userstoryId}"
+
+        return http.delete(url)
 
     return () ->
         return {"userstories": service}

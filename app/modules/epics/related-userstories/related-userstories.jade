@@ -1,0 +1,15 @@
+section.related-userstories
+    .related-userstories-header
+        span.related-userstories-title(translate="COMMON.RELATED_USERSTORIES")
+        div(tg-related-userstories-create-button)
+
+    .related-userstories-body
+        div(tg-repeat="us in vm.userstories track by us.get('id')")
+            tg-related-userstory-row.row(
+                userstory="us"
+                epic="vm.epic"
+                project="vm.project"
+                ng-class="{closed: us.get('is_closed'), blocked: us.get('is_blocked')}"
+            )
+
+        div(tg-related-userstories-create-form)

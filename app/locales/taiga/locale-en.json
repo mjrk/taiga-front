@@ -1063,7 +1063,10 @@
     "EPIC": {
         "PAGE_TITLE": "{{epicSubject}} - Epic {{epicRef}} - {{projectName}}",
         "PAGE_DESCRIPTION": "Status: {{epicStatus }}. Description: {{epicDescription}}",
-        "SECTION_NAME": "Epic"
+        "SECTION_NAME": "Epic",
+        "TITLE_LIGHTBOX_DELETE_RELATED_USERSTORY": "Delete related userstory...",
+        "MSG_LIGHTBOX_DELETE_RELATED_USERSTORY": "the related userstory '{{subject}}'",
+        "ERROR_DELETE_RELATED_USERSTORY": "We have not been able to delete: {{errorMessage}}"
     },
     "US": {
         "PAGE_TITLE": "{{userStorySubject}} - User Story {{userStoryRef}} - {{projectName}}",
