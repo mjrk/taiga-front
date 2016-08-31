@@ -105,6 +105,7 @@ class EpicDetailController extends mixOf(taiga.Controller, taiga.PageMixin)
         return @rs.projects.getBySlug(@params.pslug).then (project) =>
             @scope.projectId = project.id
             @scope.project = project
+            @scope.immutableProject = Immutable.fromJS(project._attrs)
             @scope.$emit('project:loaded', project)
             @scope.statusList = project.epic_statuses
             @scope.statusById = groupBy(project.epic_statuses, (x) -> x.id)

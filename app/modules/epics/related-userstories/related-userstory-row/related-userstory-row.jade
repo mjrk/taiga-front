@@ -1,7 +1,7 @@
 .userstory-name
     - var hash = "#";
     a(
-        tg-nav="project-userstories-detail:project=vm.project.slug,ref=vm.userstory.get('ref')"
+        tg-nav="project-userstories-detail:project=vm.project.get('slug'),ref=vm.userstory.get('ref')"
         ng-attr-title="{{vm.userstory.get('subject')}}"
     ) #{hash}{{vm.userstory.get('ref')}} {{vm.userstory.get('subject')}}
 

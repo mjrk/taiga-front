@@ -1,7 +1,11 @@
 section.related-userstories
     .related-userstories-header
         span.related-userstories-title(translate="COMMON.RELATED_USERSTORIES")
-        div(tg-related-userstories-create-button)
+        tg-related-userstories-create-button(
+          tg-check-permission="modify_epic"
+          show-create-related-userstories-lightbox="vm.showCreateRelatedUserstoriesLightbox"
+          project="vm.project"
+        )
 
     .related-userstories-body
         div(tg-repeat="us in vm.userstories track by us.get('id')")
