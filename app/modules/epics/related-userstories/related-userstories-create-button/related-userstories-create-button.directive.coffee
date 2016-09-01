@@ -24,6 +24,17 @@ RelatedUserstoriesCreateButtonDirective = (@lightboxService) ->
         scope.showLightbox = () ->
             lightboxService.open(el.find(".lightbox-create-related-user-stories"))
 
+        scope.closeLightbox = () ->
+            scope.selectedUserstory = null
+            lightboxService.close(el.find(".lightbox-create-related-user-stories"))
+
+        scope.selectProject = () ->
+            scope.selectedUserstory = null
+            ctrl.selectProject(scope.selectedProject)
+
+        scope.selectUserstory = () ->
+            ctrl.selectUserstory(scope.selectedUserstory)
+
     return {
         link: link,
         templateUrl:"epics/related-userstories/related-userstories-create-button/related-userstories-create-button.html",
@@ -33,6 +44,9 @@ RelatedUserstoriesCreateButtonDirective = (@lightboxService) ->
         scope: {
               showCreateRelatedUserstoriesLightbox: "=",
               project: "="
+              epic: "="
+              epicUserstories: "="
+              loadRelatedUserstories:"&"
         }
 
     }

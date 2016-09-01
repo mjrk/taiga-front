@@ -33,7 +33,7 @@ RelatedUserstoryRowDirective = () ->
             userstory: '='
             epic: '='
             project: '='
-            onRemovedRelatedUserstories:"&"
+            loadRelatedUserstories:"&"
         }
     }
 

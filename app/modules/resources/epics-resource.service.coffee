@@ -51,6 +51,22 @@ Resource = (urlsService, http) ->
 
         return http.post(url, params)
 
+    service.addRelatedUserstory = (epicId, userstoryId) ->
+        url = urlsService.resolve("epic-related-userstories", epicId)
+
+        params = {
+            user_story: userstoryId
+            epic: epicId
+        }
+
+        return http.post(url, params)
+
+
+    service.deleteRelatedUserstory = (epicId, userstoryId) ->
+        url = urlsService.resolve("epic-related-userstories", epicId) + "/#{userstoryId}"
+
+        return http.delete(url)
+
     return () ->
         return {"epics": service}
 

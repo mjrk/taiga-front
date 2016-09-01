@@ -1,6 +1,6 @@
 a.add-button(
     href=""
-    ng-click="vm.createRelatedUserstories(vm.project.get('id'), showLightbox)"
+    ng-click="vm.selectProject(vm.project.get('id'), showLightbox)"
 )
     tg-svg(svg-icon="icon-add")
 
@@ -10,8 +10,8 @@ div.lightbox.lightbox-create-related-user-stories
     div.form
         h2.title(translate="EPIC.CREATE_RELATED_USERSTORIES")
         select.project(
-            ng-model="selectedProjectId"
-            ng-change="vm.selectProject(selectedProjectId)"
+            ng-model="selectedProject"
+            ng-change="selectProject()"
         )
             option(
                 value=""
@@ -19,27 +19,32 @@ div.lightbox.lightbox-create-related-user-stories
             )
             option(
                 tg-repeat="project in vm.projects track by project.get('id')"
-                ng-value="::project.get('id')"
+                value="{{::project.get('id')}}"
                 ng-selected="vm.project.get('id') == project.get('id')"
             ) {{::project.get('name')}}
 
+        input.userstory(
+            ng-model="searchUserstory"
+        )
 
         select.userstory(
-            ng-model="selectedUserstoryId"
-            ng-change="vm.selectUserstory(selectedUserstoryId)"
+            ng-model="selectedUserstory"
+            ng-change="selectUserstory()"
         )
+            - var hash = "#";
             option(
                 value=""
                 translate="EPIC.SELECT_USER_STORY"
             )
             option(
-                tg-repeat="userstory in vm.userstories track by userstory.get('id')"
-                ng-value="::userstory.get('id')"
-            ) {{::userstory.get('ref')}} {{::userstory.get('title')}}
+                ng-repeat="userstory in vm.projectUserstories | toMutable | filter:searchUserstory track by userstory.id"
+                value="{{ ::userstory.id }}"
+            ) #{hash}{{::userstory.ref}} {{::userstory.subject}}
 
         a.button-green(
             href=""
-            ng-click="vm.saveRelatedUserStory()"
+            ng-click="vm.saveRelatedUserStory(closeLightbox)"
+            tg-loading="vm.loading"
         )
             span(
                 translate="COMMON.SAVE"

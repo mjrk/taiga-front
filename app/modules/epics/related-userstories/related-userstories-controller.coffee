@@ -26,7 +26,7 @@ class RelatedUserStoriesController
         @.sectionName = "Epics"
         @.showCreateRelatedUserstoriesLightbox = false
 
-    reloadRelatedUserstories: () ->
+    loadRelatedUserstories: () ->
         @rs.userstories.listInEpic(@.epic.get('id')).then (data) =>
             @.userstories = data
 

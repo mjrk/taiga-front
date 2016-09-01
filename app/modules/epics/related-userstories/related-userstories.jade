@@ -5,16 +5,19 @@ section.related-userstories
           tg-check-permission="modify_epic"
           show-create-related-userstories-lightbox="vm.showCreateRelatedUserstoriesLightbox"
           project="vm.project"
+          epic="vm.epic"
+          epic-userstories="vm.userstories"
+          load-related-userstories="vm.loadRelatedUserstories()"
         )
 
     .related-userstories-body
         div(tg-repeat="us in vm.userstories track by us.get('id')")
             tg-related-userstory-row.row(
+                ng-class="{closed: us.get('is_closed'), blocked: us.get('is_blocked')}"
                 userstory="us"
                 epic="vm.epic"
                 project="vm.project"
-                ng-class="{closed: us.get('is_closed'), blocked: us.get('is_blocked')}"
-                on-removed-related-userstories="vm.reloadRelatedUserstories()"
+                load-related-userstories="vm.loadRelatedUserstories()"
             )
 
         div(tg-related-userstories-create-form)

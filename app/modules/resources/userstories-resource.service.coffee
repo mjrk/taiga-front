@@ -62,11 +62,6 @@ Resource = (urlsService, http) ->
             .then (result) ->
                 return Immutable.fromJS(result.data)
 
-    service.deleteInEpic = (epicId, userstoryId) ->
-        url = urlsService.resolve("epic-related-userstories", epicId) + "/#{userstoryId}"
-
-        return http.delete(url)
-
     return () ->
         return {"userstories": service}
 

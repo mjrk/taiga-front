@@ -22,28 +22,45 @@ module = angular.module("taigaEpics")
 class RelatedUserstoriesCreateButtonController
     @.$inject = [
         "tgCurrentUserService",
-        "tgResources"
+        "tgResources",
+        "$tgConfirm",
+        "$tgAnalytics"
     ]
 
-    constructor: (@currentUserService, @rs) ->
+    constructor: (@currentUserService, @rs, @confirm, @analytics) ->
         @.projects = @currentUserService.projects.get("all")
-        @.userstories = []
-        @.selectedProjectId = null
+        @.projectUserstories = Immutable.List()
         @.selectedUserstoryId = null
+        @.loading = false
 
-    createRelatedUserstories: (projectId, callback) =>
-        @.selectProject(projectId).then =>
-            callback()
-
-    selectProject: (selectedProjectId) ->
-        @.selectedProjectId = selectedProjectId
+    selectProject: (selectedProjectId, onSelectedProject) ->
         @rs.userstories.listAllInProject(selectedProjectId).then (data) =>
-            @.userstories = data
+            excludeIds = @.epicUserstories.map((us) -> us.get('id'))
+            filteredData = data.filter((us) -> excludeIds.indexOf(us.get('id')) == -1)
+            @.projectUserstories = filteredData
+            if onSelectedProject
+                onSelectedProject()
 
     selectUserstory: (selectedUserstoryId) ->
         @.selectedUserstoryId = selectedUserstoryId
 
-    saveRelatedUserStory: () ->
-        console.log "saveRelatedUserStory", @.selectedProjectId, @.selectedUserstoryId
+    saveRelatedUserStory: (onSavedRelatedUserstory) ->
+        # TODO: validate form
+        @.loading = true
+
+        onError = () =>
+            @.loading = false
+            @confirm.notify("error")
+
+        onSuccess = () =>
+            @analytics.trackEvent("epic related user story", "create", "create related user story on epic", 1)
+            @.loading = false
+            if onSavedRelatedUserstory
+                onSavedRelatedUserstory()
+            @.loadRelatedUserstories()
+
+        epicId = @.epic.get('id')
+        @rs.epics.addRelatedUserstory(epicId, @.selectedUserstoryId).then(onSuccess, onError)
+
 
 module.controller("RelatedUserstoriesCreateButtonCtrl", RelatedUserstoriesCreateButtonController)

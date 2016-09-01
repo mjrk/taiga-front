@@ -48,14 +48,16 @@ class RelatedUserstoryRowController
         return @confirm.askOnDelete(title, message)
             .then (askResponse) =>
                 onError = () =>
-                    message = @translate.instant('ERROR_DELETE_RELATED_USERSTORY', {errorMessage: message})
+                    message = @translate.instant('EPIC.ERROR_DELETE_RELATED_USERSTORY', {errorMessage: message})
                     @confirm.notify("error", null, message)
                     askResponse.finish(false)
 
                 onSuccess = () =>
-                    @.onRemovedRelatedUserstories()
+                    @.loadRelatedUserstories()
                     askResponse.finish()
 
-                @rs.userstories.deleteInEpic(@.epic.get('id'), @.userstory.get('id')).then(onSuccess, onError)
+                epicId = @.epic.get('id')
+                userstoryId = @.userstory.get('id')
+                @rs.epics.deleteRelatedUserstory(epicId, userstoryId).then(onSuccess, onError)
 
 module.controller("RelatedUserstoryRowCtrl", RelatedUserstoryRowController)
