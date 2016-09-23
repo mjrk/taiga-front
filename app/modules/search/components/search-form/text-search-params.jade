@@ -1,0 +1,45 @@
+.text-search-params
+    fieldset.searchbox-filters(ng-if="vm.params.filter")
+        input(
+            type='radio'
+            id="filter-all"
+            name="filter-search"
+        )
+        label(
+            for="filter-all"
+            ng-click="vm.selectFilter('all')"
+            ng-class="{active: vm.params.filter == 'all'}",
+        ) {{ 'DISCOVER.FILTERS.ALL' | translate }}
+
+        input(
+            type='radio'
+            id="filter-kanban"
+            name="filter-search"
+        )
+        label(
+            for="filter-kanban"
+            ng-class="{active: vm.params.filter == 'kanban'}",
+            ng-click="vm.selectFilter('kanban')"
+        ) {{ 'DISCOVER.FILTERS.KANBAN' | translate }}
+
+        input(
+            type='radio'
+            id="filter-scrum"
+            name="filter-search"
+        )
+        label(
+            for="filter-scrum"
+            ng-class="{active: vm.params.filter == 'scrum'}",
+            ng-click="vm.selectFilter('scrum')"
+        ) {{ 'DISCOVER.FILTERS.SCRUM' | translate }}
+
+        input(
+            type='radio'
+            id="filter-people"
+            name="filter-search"
+        )
+        label(
+            for="filter-people"
+            ng-class="{active: vm.params.filter == 'people'}",
+            ng-click="vm.selectFilter('people')"
+        ) {{ 'DISCOVER.FILTERS.PEOPLE' | translate }}

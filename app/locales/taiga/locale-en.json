@@ -855,6 +855,7 @@
             "CHANGE_PASSWORD_TITLE": "Change password",
             "CHANGE_PASSWORD": "Change password",
             "DASHBOARD_TITLE": "Dashboard",
+            "GLOBAL_SEARCH_TITLE": "Search projects and relations",
             "DISCOVER_TITLE": "Discover trending projects",
             "DISCOVER": "Discover"
         },
@@ -1461,7 +1462,9 @@
         "PAGE_TITLE": "Search - {{projectName}}",
         "PAGE_DESCRIPTION": "Search anything, user stories, issues, tasks or wiki pages, in the project {{projectName}}: {{projectDescription}}",
         "FILTER_EPICS": "Epics",
+        "SEARCH_TEXT": "Text",
         "FILTER_USER_STORIES": "User Stories",
+        "FILTER_SPRINTS": "Sprints",
         "FILTER_ISSUES": "Issues",
         "FILTER_TASKS": "Tasks",
         "FILTER_WIKI": "Wiki Pages",
@@ -1716,5 +1719,8 @@
             "ACTION_TITLE": "Search",
             "RESULTS": "Search results"
         }
+    },
+    "GLOBAL_SEARCH": {
+        "SEARCH_TITLE": "Search"
     }
 }

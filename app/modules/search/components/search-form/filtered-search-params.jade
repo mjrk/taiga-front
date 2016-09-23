@@ -1,0 +1,12 @@
+.filtered-search-params
+    fieldset.searchbox-filters(ng-if="vm.params.filter")
+      span(ng-repeat="(itemType, translateKey) in vm.itemTypes")
+          input(
+              type='checkbox'
+              id="{{itemType}}-item-type"
+          )
+          label(
+              for="{{itemType}}-item-type"
+              ng-click="vm.toggleItemType(itemType)"
+              ng-class="{active: vm.params.item_types.indexOf(itemType) != -1 }",
+          ) {{ translateKey | translate }}

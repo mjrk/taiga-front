@@ -52,6 +52,9 @@ urls = {
     "not-found": "/not-found"
     "permission-denied": "/permission-denied"
 
+    "search": "/search"
+    "search-results": "/search/results/:result_type"
+
     "discover": "/discover"
     "discover-search": "/discover/search"
 

@@ -91,6 +91,31 @@ configure = ($routeProvider, $locationProvider, $httpProvider, $provide, $tgEven
         }
     )
 
+    $routeProvider.when("/search",
+        {
+            templateUrl: "search/search-home/search-home.html",
+            controller: "SearchHome",
+            controllerAs: "vm"
+            title: "HOME.PAGE_TITLE",
+            loader: true,
+            description: "HOME.PAGE_DESCRIPTION",
+            joyride: "dashboard"
+        }
+    )
+
+    $routeProvider.when("/search/results/:result_type",
+        {
+            templateUrl: "search/search-results/search-results.html",
+            controller: "SearchResults",
+            controllerAs: "vm"
+            title: "HOME.PAGE_TITLE",
+            loader: true,
+            description: "HOME.PAGE_DESCRIPTION",
+            joyride: "dashboard",
+            reloadOnSearch: false
+        }
+    )
+
     # Discover
     $routeProvider.when("/discover",
         {
@@ -886,6 +911,9 @@ modules = [
     "taigaWikiHistory",
     "taigaEpics",
     "taigaUtils"
+
+    # search extension
+    "taigaSearch",
 
     # template cache
     "templates",

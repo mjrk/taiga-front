@@ -46,6 +46,13 @@ nav.navbar(ng-if="vm.isEnabledHeader")
             tg-svg(svg-icon="icon-dashboard")
 
         a(
+            tg-nav="search"
+            ng-class="{active: vm.active}"
+            title="{{'PROJECT.NAVIGATION.GLOBAL_SEARCH_TITLE' | translate}}"
+        )
+            tg-svg(svg-icon="icon-search")
+
+        a(
             href="#",
             tg-nav="discover",
             title="{{'PROJECT.NAVIGATION.DISCOVER_TITLE' | translate}}",
