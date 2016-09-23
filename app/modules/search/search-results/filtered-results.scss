@@ -1,0 +1,27 @@
+.filtered-results {
+    .project-field {
+        flex: 0 0 100px;
+        text-align: center;
+        width: 100px;
+    }
+    .milestone-field {
+        flex: 0 0 100px;
+        text-align: center;
+        width: 100px;
+    }
+    .compact-field {
+        flex: 0 0 25px;
+        text-align: center;
+        width: 25px;
+    }
+    .name-field {
+        flex: 0 0 150px;
+        width: 150px;
+    }
+    .date-field {
+        flex: 1 0 140px;
+        padding: 0 1rem;
+        position: relative;
+        text-align: left;
+    }
+}

@@ -1,0 +1,36 @@
+div.search-header
+    div.search-header-inner(ng-class="'{{vm.selectedSearchType}}-search-type'")
+
+        h1.title {{ 'GLOBAL_SEARCH.SEARCH_TITLE' | translate }}
+
+        form(ng-submit="vm.submitFilter()", ng-class="vm.selectedSearchType + '-search-type'")
+            fieldset.search-mode
+              label(
+                  href=""
+                  title="mode"
+                  class="active"
+              )
+                  span {{ vm.searchTypes[vm.selectedSearchType] | translate }}
+                  
+              .search-mode-dropdown
+                ul
+                  li(ng-repeat="(type, translateKey) in vm.searchTypes")
+                    label(
+                      ng-click="vm.selectSearchType(type)"
+                      ng-class="{active: vm.selectedSearchType == type}",
+                    ) {{ translateKey | translate }}
+
+            div.searchbox
+                input(
+                    name="search"
+                    type="text"
+                    placeholder="{{ 'DISCOVER.SEARCH.INPUT_PLACEHOLDER' | translate }}"
+                    ng-model="vm.params.q"
+                )
+                //- tg-svg.search-button(
+                //-     ng-click="vm.submitFilter()"
+                //-     svg-icon="icon-search"
+                //-     svg-title-translate="DISCOVER.SEARCH.ACTION_TITLE"
+                //- )
+                
+            .search-params(ng-include="vm.getFiltersTemplate()")

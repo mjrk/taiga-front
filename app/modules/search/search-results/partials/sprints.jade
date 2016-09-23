@@ -1,0 +1,58 @@
+.search-result-list.filtered-results
+    section.issues-table.basic-table(ng-class="{empty: !vm.searchResult.length}")
+        div.row.title
+            div.project-field(data-fieldname="project") 
+                | Project
+            div.level-field(data-fieldname="closed_points")
+                abbr(title="completed points") Closed
+            div.level-field(data-fieldname="total_points")
+                abbr(title="total points") Total
+            div.name-field(data-fieldname="project") 
+                | Name
+            div.date-field(data-fieldname="estimated_start")
+                | Start
+            div.date-field(data-fieldname="estimated_finish")
+                | Finish
+            div.issue-field(data-fieldname="status", translate="ISSUES.TABLE.COLUMNS.STATUS")
+            div.created-field(data-fieldname="created_date", translate="ISSUES.TABLE.COLUMNS.CREATED")
+
+        div.row.table-main(
+            ng-repeat="issue in vm.searchResult track by issue.id"
+            ng-class="{'is-blocked': issue.is_blocked}"
+        )
+            div.project-field(data-fieldname="project") 
+                a(
+                    href="#"
+                    tg-nav="project:project=issue.project_extra_info.slug"
+                    title="{{issue.project_extra_info.name}}"
+                    ng-bind="issue.project_extra_info.name"
+                )
+            div.level-field
+                span {{ ::issue.closed_points }}
+            div.level-field
+                span {{ ::issue.total_points }}
+
+            div.name-field(data-fieldname="milestone") 
+                a(
+                    href="#"
+                    tg-nav="project-taskboard:project=issue.project_extra_info.slug,sprint=issue.slug"
+                    title="{{issue.name}}"
+                    ng-bind="issue.name"
+                )
+                
+            div.date-field(tg-bo-bind="issue.estimated_start|momentFormat:'DD MMM YYYY'")
+
+            div.date-field(tg-bo-bind="issue.estimated_finish|momentFormat:'DD MMM YYYY'")
+
+            div.issue-field
+                span(ng-if="issue.closed") Closed
+                span(ng-if="!issue.closed") Open
+
+            div.created-field(tg-bo-bind="issue.created_date|momentFormat:'DD MMM YYYY HH:mm'")
+
+    section.empty-issues(ng-if="vm.searchResult != undefined && vm.searchResult.length == 0")
+        img(
+            src="/#{v}/images/issues-empty.png",
+            alt="{{ISSUES.TABLE.EMPTY.TITLE | translate }}"
+        )
+        p.title(translate="ISSUES.TABLE.EMPTY.TITLE")

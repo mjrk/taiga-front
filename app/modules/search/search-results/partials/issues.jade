@@ -1,0 +1,90 @@
+.search-result-list.filtered-results
+    section.issues-table.basic-table(ng-class="{empty: !vm.searchResult.length}")
+        div.row.title
+            div.project-field(data-fieldname="project") 
+                | Project
+            div.compact-field(data-fieldname="type") 
+                abbr(title="{{'ISSUES.TABLE.COLUMNS.TYPE' | translate}}") T
+            div.compact-field(data-fieldname="severity")
+                abbr(title="{{'ISSUES.TABLE.COLUMNS.SEVERITY' | translate}}") S
+            div.compact-field(data-fieldname="priority")
+                abbr(title="{{'ISSUES.TABLE.COLUMNS.PRIORITY' | translate}}") P
+            div.compact-field(data-fieldname="total_voters")
+                abbr(title="{{'ISSUES.TABLE.COLUMNS.VOTES' | translate}}") V
+            //- div.level-field(data-fieldname="type", translate="ISSUES.TABLE.COLUMNS.TYPE")
+            //- div.level-field(data-fieldname="severity", translate="ISSUES.TABLE.COLUMNS.SEVERITY")
+            //- div.level-field(data-fieldname="priority", translate="ISSUES.TABLE.COLUMNS.PRIORITY")
+            //- div.votes(data-fieldname="total_voters", translate="ISSUES.TABLE.COLUMNS.VOTES")
+            div.subject(data-fieldname="subject", translate="ISSUES.TABLE.COLUMNS.SUBJECT")
+            div.issue-field(data-fieldname="status", translate="ISSUES.TABLE.COLUMNS.STATUS")
+            div.created-field(data-fieldname="created_date", translate="ISSUES.TABLE.COLUMNS.CREATED")
+            div.assigned-field(data-fieldname="assigned_to", translate="ISSUES.TABLE.COLUMNS.ASSIGNED_TO")
+
+        div.row.table-main(
+            ng-repeat="issue in vm.searchResult track by issue.id"
+            ng-class="{'is-blocked': issue.is_blocked}"
+        )
+            div.project-field(data-fieldname="project") 
+                a(
+                    href="#"
+                    tg-nav="project:project=issue.project_extra_info.slug"
+                    title="{{issue.project_extra_info.name}}"
+                    ng-bind="issue.project_extra_info.name"
+                )
+            div.compact-field
+                | {{issue.type}}
+            div.compact-field
+                | {{issue.severity}}
+            div.compact-field
+                | {{issue.priority}}
+            div.compact-field.votes(
+                ng-class="{'inactive': !issue.total_voters, 'is-voted': issue.is_voter}"
+                title="{{ 'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate:{total:issue.total_voters||0}:'messageformat' }}"
+            )
+                span {{ ::issue.total_voters }}
+            div.subject
+                a(
+                    href=""
+                    tg-nav="project-issues-detail:project=issue.project_extra_info.slug,ref=issue.ref"
+                    title="#{{ ::issue.ref }} {{ ::issue.subject }}"
+                )
+                    span(tg-bo-ref="issue.ref")
+                    span.blocked-text(
+                        ng-if="issue.is_blocked"
+                        title="{{issue.blocked_note}}"
+                    ) {{'ISSUES.TABLE.BLOCKED' | translate}}
+                    span(ng-bind="issue.subject")
+            
+            div.issue-field
+                | {{issue.status_extra_info.name}}
+              
+            //- div.issue-field(tg-issue-status-inline-edition="issue")
+            //-     a.issue-status(
+            //-         href=""
+            //-         title="{{'ISSUES.TABLE.TITLE_ACTION_CHANGE_STATUS' | translate}}"
+            //-     )
+            //-         span.issue-status-bind
+            //-         tg-svg(
+            //-             tg-check-permission="modify_issue"
+            //-             svg-icon="icon-arrow-down"
+            //-         )
+            //- 
+            div.created-field(tg-bo-bind="issue.created_date|momentFormat:'DD MMM YYYY HH:mm'")
+            //- 
+            div.assigned-field
+                div.issue-assignedto(ng-if="issue.assigned_to")
+                    |  {{issue.assigned_to_extra_info.full_name_display}}
+            //- div.assigned-field(tg-issue-assigned-to-inline-edition="issue")
+            //-     div.issue-assignedto(title="{{'ISSUES.TABLE.TITLE_ACTION_ASSIGNED_TO' | translate}}")
+            //-         figure.avatar
+            //-         tg-svg(
+            //-             tg-check-permission="modify_issue"
+            //-             svg-icon="icon-arrow-down"
+            //-         )
+
+    section.empty-issues(ng-if="vm.searchResult != undefined && vm.searchResult.length == 0")
+        img(
+            src="/#{v}/images/issues-empty.png",
+            alt="{{ISSUES.TABLE.EMPTY.TITLE | translate }}"
+        )
+        p.title(translate="ISSUES.TABLE.EMPTY.TITLE")

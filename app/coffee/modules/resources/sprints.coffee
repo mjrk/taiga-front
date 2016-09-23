@@ -39,6 +39,9 @@ resourceProvider = ($repo, $model, $storage) ->
     service.stats = (projectId, sprintId) ->
         return $repo.queryOneRaw("milestones", "#{sprintId}/stats")
 
+    service.listInAllProjects = (filters) ->
+        return $repo.queryMany("milestones", filters)
+
     service.list = (projectId, filters) ->
         params = {"project": projectId}
         params = _.extend({}, params, filters or {})

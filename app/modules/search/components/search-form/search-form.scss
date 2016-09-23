@@ -1,0 +1,144 @@
+.search-header {
+    background: url('../images/discover.png') repeat-x bottom left $whitish;
+    margin-bottom: 2.5rem;
+    padding: 1rem 1rem 2rem;
+    text-align: center;
+    .search-header-inner {
+        @include centered;
+        margin: 0 auto;
+    }
+    .title {
+        @include font-size(xxlarge);
+        margin-bottom: 0;
+    }
+    .project-number {
+        @include font-type(light);
+        @include font-size(large);
+        color: $primary;
+    }
+    form {
+        margin: 0 3rem;
+        position: relative;
+        @include breakpoint(tablet) {
+            margin: 0 .5rem;
+        }
+    }
+    input[type="text"] {
+        background: $white;
+        border: 0;
+        padding: 1rem;
+        width: 100%;
+        &:focus {
+            outline-color: $primary-light;
+        }
+        &:-webkit-autofill {
+            background: rgba($primary-dark, .5);
+        }
+    }
+    .search-button {
+        @include svg-size(1.5rem);
+        fill: $gray-light;
+        left: 1rem;
+        position: absolute;
+        right: auto;
+        top: 1rem;
+        transition: fill .2s;
+        &:hover {
+            cursor: pointer;
+            fill: $primary;
+        }
+    }
+    .searchbox {
+        input {
+            padding-left: 6.7rem;
+            padding-right: 23rem;
+        }
+    }
+    .searchbox-filters,
+    .search-mode {
+        input {
+            display: none;
+        }
+        label {
+            border-radius: 4px;
+            color: $gray-light;
+            cursor: pointer;
+            display: inline-block;
+            padding: .4rem .75rem;
+            transition: all .2s;
+            transition-delay: .2s;
+            &.active {
+                color: $white;
+            }
+            &:hover {
+                background: $whitish;
+                color: $gray;
+            }
+        }
+    }
+    .searchbox-filters {
+        position: absolute;
+        right: 1rem;
+        top: .7rem;
+        width: auto;
+        .active {
+            background: $primary-light;
+        }
+
+    }
+    .search-mode {
+        left: .5rem;
+        position: absolute;
+        top: .7rem;
+        width: auto;
+        .active {
+            background: $red-light;
+        }
+        > label {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            line-height: .9rem;
+            min-height: 2.1rem;
+            padding-bottom: 0;
+            padding-top: 0;
+            width: 5.9rem;
+        }
+        &:hover {
+            .search-mode-dropdown {
+                animation: dropdownFade .2s cubic-bezier(.09, 0, .99, .01) both;
+                display: block;
+            }
+        }
+        %dropdown {
+            border-radius: .5rem;
+            display: none;
+            position: absolute;
+            top: 2.1rem;
+            z-index: 999;
+        }
+    }
+}
+
+.search-mode-dropdown {
+    @extend %dropdown;
+    background: $white;
+    border: 1px solid $gray-light;
+    padding: .3rem;
+    ul {
+        @include arrow('bottom', $gray-light, $gray-light, 1, 8);
+        margin: 0;
+        margin-bottom: .5rem;
+        padding: 0;
+
+    }
+    a {
+        color: $gray-light;
+        display: block;
+        padding: .8rem .5rem;
+        &:hover {
+            background: rgba($white, .1);
+            color: $primary-light;
+        }
+    }
+}

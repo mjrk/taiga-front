@@ -1,0 +1,27 @@
+div(tg-search-results)
+    .search-results
+        tg-search-form(
+            on-change="vm.onChangeFilter"
+        )
+
+    .empty-search-results(ng-if="!vm.getResultCount() && !vm.loadingGlobal && !vm.loadingList")
+        img(
+            src="/#{v}/images/issues-empty.png",
+            alt="{{ DISCOVER.EMPTY | translate }}"
+        )
+        p.title(translate="DISCOVER.EMPTY")
+
+    .search-results-content(ng-if="vm.getResultCount() || vm.loadingGlobal || vm.loadingList")
+        .spin(tg-loading="vm.loadingGlobal")
+
+        .search-results-content-inner(ng-if="!vm.loadingGlobal")
+            .spin(ng-show="vm.loadingList", tg-loading="vm.loadingList")
+
+            .search-results-list(ng-if="!vm.loadingList" ng-include="vm.getSearchResultsListTemplate()")
+
+            a.button-green.more-results(
+                tg-loading="vm.loadingPagination"
+                href="#"
+                ng-click="vm.showMore()"
+                ng-if="vm.nextSearchPage"
+            ) {{ 'DISCOVER.VIEW_MORE' | translate }}

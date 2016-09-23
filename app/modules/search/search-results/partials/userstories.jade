@@ -1,0 +1,68 @@
+.search-result-list.filtered-results
+    section.issues-table.basic-table(ng-class="{empty: !vm.searchResult.length}")
+        div.row.title
+            div.project-field(data-fieldname="project") 
+                | Project
+            div.milestone-field(data-fieldname="project") 
+                | Sprint
+            div.compact-field(data-fieldname="total_voters")
+                abbr(title="{{'ISSUES.TABLE.COLUMNS.VOTES' | translate}}") V
+            div.subject(data-fieldname="subject", translate="ISSUES.TABLE.COLUMNS.SUBJECT")
+            div.issue-field(data-fieldname="status", translate="ISSUES.TABLE.COLUMNS.STATUS")
+            div.created-field(data-fieldname="created_date", translate="ISSUES.TABLE.COLUMNS.CREATED")
+            div.assigned-field(data-fieldname="assigned_to", translate="ISSUES.TABLE.COLUMNS.ASSIGNED_TO")
+
+        div.row.table-main(
+            ng-repeat="issue in vm.searchResult track by issue.id"
+            ng-class="{'is-blocked': issue.is_blocked}"
+        )
+            div.project-field(data-fieldname="project") 
+                a(
+                    href="#"
+                    tg-nav="project:project=issue.project_extra_info.slug"
+                    title="{{issue.project_extra_info.name}}"
+                    ng-bind="issue.project_extra_info.name"
+                )
+            div.milestone-field(data-fieldname="milestone") 
+                a(
+                    href="#"
+                    ng-if="issue.milestone_slug"
+                    tg-nav="project-taskboard:project=issue.project_extra_info.slug,sprint=issue.milestone_slug"
+                    title="{{issue.milestone_slug}}"
+                    ng-bind="issue.milestone_slug"
+                )
+                span(ng-if="!issue.milestone_slug")
+                    | None
+            div.compact-field.votes(
+                ng-class="{'inactive': !issue.total_voters, 'is-voted': issue.is_voter}"
+                title="{{ 'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate:{total:issue.total_voters||0}:'messageformat' }}"
+            )
+                span {{ ::issue.total_voters }}
+            div.subject
+                a(
+                    href=""
+                    tg-nav="project-issues-detail:project=issue.project_extra_info.slug,ref=issue.ref"
+                    title="#{{ ::issue.ref }} {{ ::issue.subject }}"
+                )
+                    span(tg-bo-ref="issue.ref")
+                    span.blocked-text(
+                        ng-if="issue.is_blocked"
+                        title="{{issue.blocked_note}}"
+                    ) {{'ISSUES.TABLE.BLOCKED' | translate}}
+                    span(ng-bind="issue.subject")
+
+            div.issue-field
+                | {{issue.status_extra_info.name}}
+
+            div.created-field(tg-bo-bind="issue.created_date|momentFormat:'DD MMM YYYY HH:mm'")
+
+            div.assigned-field
+                div.issue-assignedto(ng-if="issue.assigned_to")
+                    |  {{issue.assigned_to_extra_info.full_name_display}}
+
+    section.empty-issues(ng-if="vm.searchResult != undefined && vm.searchResult.length == 0")
+        img(
+            src="/#{v}/images/issues-empty.png",
+            alt="{{ISSUES.TABLE.EMPTY.TITLE | translate }}"
+        )
+        p.title(translate="ISSUES.TABLE.EMPTY.TITLE")
