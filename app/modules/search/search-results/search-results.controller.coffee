@@ -62,6 +62,19 @@ class SearchResults
                 count = @searchResult.length
         count
 
+    getRouteParamsFilter: (name) ->
+        @routeParams[name]
+
+    updateRouteParamsFilter: (name, value) ->
+        @routeParams[name] = value
+        params = {}
+        params[name] = value
+        @route.updateParams(params)
+
+    updateRouteParamsFilters: (params) ->
+        _.assign(@routeParams, params)
+        @route.updateParams(params)
+
     fetch: () ->
         @.page = 1
 
@@ -76,7 +89,7 @@ class SearchResults
 
         @.fetch().then () => @.loadingGlobal = false
 
-    fetchByOrderBy: () ->
+    fetchList: () ->
         return if @.loadingList
 
         @.loadingList = true
@@ -101,24 +114,12 @@ class SearchResults
             result
 
     onChangeFilter: (params) =>
-        return if @.loadingList
-
-        @route.updateParams(params)
-
-        @.loadingList = true
-
-        @.search(params).then () => @.loadingList = false
-
-        # @.fetchByGlobalSearch()
+        @updateRouteParamsFilters(params)
+        @.fetchList()
 
     onChangeOrder: (orderBy) ->
-        # @.orderBy = orderBy
-
-        @route.updateParams({
-            order_by: orderBy
-        })
-
-        @.fetchByOrderBy()
+        @updateRouteParamsFilter("order_by", orderBy)
+        @.fetchList()
 
 angular.module("taigaSearch").controller(
     "SearchResults", SearchResults

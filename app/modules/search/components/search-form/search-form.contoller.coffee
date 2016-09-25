@@ -67,6 +67,8 @@ class SearchFormController
 
     callback: (params) ->
         params = params or @.params
+        @.params['order_by'] = @routeParams['order_by']
+
         if not @.searchTypes[@.selectedSearchType]?
             return
         result_type = {result_type: @.selectedSearchType}
