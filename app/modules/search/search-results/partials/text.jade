@@ -1,4 +1,6 @@
 .search-result-list
+    .spin(ng-show="vm.loadingList", tg-loading="vm.loadingList")
+
     ul.project-list(ng-if="!vm.loadingList && vm.searchResult.size")
         li.list-itemtype-project(tg-repeat="project in vm.searchResult track by project.get('id')")
             .list-itemtype-project-general
@@ -69,3 +71,10 @@
                           .subject
                               a(title="{{item.get('ref')}} {{item.get('subject')}}" tg-nav="project-wiki-page:project=project.get('slug'),slug=item.get('slug')")
                                   span(ng-bind-html="item.get('slug') | highlightTerms:vm.activeParams.q")
+
+    .empty-search-results(ng-if="!vm.searchResult.size && !vm.loadingList")
+        img(
+            src="/#{v}/images/issues-empty.png",
+            alt="{{ DISCOVER.EMPTY | translate }}"
+        )
+        p.title(translate="DISCOVER.EMPTY")

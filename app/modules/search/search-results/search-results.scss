@@ -120,6 +120,18 @@
     }
 }
 
+.search-result-list .row.title .icon {
+    fill: currentcolor;
+    height: .75rem;
+    margin-left: .25rem;
+    vertical-align: middle;
+    width: .75rem;
+}
+
+.search-result-list .row.title div:not([data-fieldname]) {
+    cursor: default;
+}
+
 .empty-search-results {
     @include centered;
     margin-top: 4rem;
