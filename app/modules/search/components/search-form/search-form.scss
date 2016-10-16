@@ -49,13 +49,31 @@
         }
     }
     .searchbox {
+        background-color: $white;
         input {
             padding-left: 6.7rem;
             padding-right: 23rem;
         }
+        .filter-param-input {
+            padding-bottom: .2rem;
+            text-align: left;
+            .param-name {
+                margin-left: .5rem;
+            }
+            .param-name:hover {
+                background: $white;
+            }
+            div {
+                display: inline-block;
+            }
+        }
+        .filter-param-value .active {
+            background: $primary-light;
+        }
     }
     .searchbox-filters,
-    .search-mode {
+    .search-mode,
+    .filter-param-input {
         input {
             display: none;
         }

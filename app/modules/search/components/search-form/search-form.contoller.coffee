@@ -17,15 +17,133 @@
 # File: search-form.controller.coffee
 ###
 
-class SearchFormController
+includesAny = (array, values) ->
+    for entry in array
+        if _.includes(values, entry.id.toString())
+            return true
+    false
+
+
+class FilterParamsController
+
+    constructor: ->
+        @.filterSpecs ||= {}
+        @resetFilterValues()
+        @loadFilterSpecs(@.selectedSearchType).then () =>
+            @getFilterValuesFromRouteParams()
+
+    resetFilterValues: () ->
+        @.filterValues = {}
+
+    isSelectedFilterValue: (param, choice) ->
+        @.filterValues[param] ||= []
+        _.includes(@.filterValues[param], choice)
+
+    toggleFilterValue: (param, choice) ->
+        @.filterValues[param] ||= []
+        if @isSelectedFilterValue(param, choice)
+            @removeFilterValue(param, choice)
+        else
+            @setFilterValue(param, choice)
+        @.callback()
+
+    toggleAllFilterValues: (filterSpec) ->
+        param = filterSpec.param
+        @.filterValues[param] ||= []
+        if @.filterValues[param]?.length > 0
+            @.filterValues[param] = []
+        else
+            @.filterValues[param] = Object.values(filterSpec.choices)
+        @updateFilterValueParam(param)
+        @.callback()
+
+    setFilterValue: (param, choice) ->
+        @.filterValues[param] ||= []
+        @.filterValues[param].push choice
+        @updateFilterValueParam(param)
+
+    updateFilterValueParam: (param) ->
+        paramValues = @.filterValues[param]
+        if paramValues?.length > 0
+            @.params[param] = _.flatten(
+                (
+                    e.id for e in c.details
+                ) for c in paramValues
+            ).join(",")
+        else
+            @.params[param] = null
+
+    getFilterValuesFromRouteParams: () ->
+        for filterSpec in @currentFilterSpecs()
+            if @routeParams[filterSpec.param]?
+                values = @routeParams[filterSpec.param].split(",")
+                @.filterValues[filterSpec.param] = (
+                    c for c in Object.values(
+                        filterSpec.choices
+                    ) when includesAny(c.details, values)
+                )
+
+    removeFilterValue: (param, choice) ->
+        @.filterValues[param] ||= []
+        _.remove(@.filterValues[param], choice)
+        @updateFilterValueParam(param)
+
+    loadFilterSpecs: (type=@.selectedSearchType) ->
+        method = "get#{_.capitalize(type)}FilterParams"
+        filters = @.filterSpecs[type] or []
+
+        if @.filterSpecs[type]? or not @[method]?
+            @q.when(filters)
+        else
+            @[method]().then (result) =>
+                @.filterSpecs[type] = result
+
+    currentFilterSpecs: () ->
+        @.filterSpecs[@.selectedSearchType] or []
+
+    getIssuesFilterParams: () ->
+        @filterParams.getIssueStatusMap().then (result) ->
+            [
+                name: "Status"
+                param: "status"
+                choices: result
+            ]
+
+    getTasksFilterParams: () ->
+        @filterParams.getTaskStatusMap().then (result) ->
+            [
+                name: "Status"
+                param: "status"
+                choices: result
+            ]
+
+    getUserstoriesFilterParams: () ->
+        @filterParams.getUserstoryStatusMap().then (result) ->
+            [
+                name: "Status"
+                param: "status"
+                choices: result
+            ]
+
+    # getSprintsFilterParams: () ->
+    #     @filterParams.getIssueStatusMap().then (result) ->
+    #         [
+    #             name: "Status"
+    #             choices: result
+    #         ]
+
+
+class SearchFormController extends FilterParamsController
     @.$inject = [
+        '$q',
         '$tgLocation',
         '$tgNavUrls',
-        '$routeParams'
+        '$routeParams',
+        '$tgSearchFilterParamsProvider'
     ]
 
     constructor: (
-        @location, @navUrls, @routeParams
+        @q, @location, @navUrls, @routeParams, @filterParams
     ) ->
         @.searchTypes =
             text: "SEARCH.SEARCH_TEXT"
@@ -38,6 +156,7 @@ class SearchFormController
 
         @.params = angular.copy(@routeParams)
         @.params.filter ||= 'all'
+        super
 
     getFiltersTemplate: () ->
         if @.selectedSearchType == "text"
@@ -46,7 +165,13 @@ class SearchFormController
             "search/components/search-form/filtered-search-params.html"
 
     selectSearchType: (type) ->
-        @.selectedSearchType = type
+        @loadFilterSpecs(type).then =>
+            @resetParams()
+            @.selectedSearchType = type
+
+    resetParams: () ->
+        @.params = {}
+        @resetFilterValues()
 
     selectFilter: (filter) ->
         @.params.filter = filter
