@@ -34,6 +34,8 @@ class FilterParamsController
 
     resetFilterValues: () ->
         @.filterValues = {}
+        if @.selectedSearchType == "text"
+            @.params.filter ||= 'all'
 
     isSelectedFilterValue: (param, choice) ->
         @.filterValues[param] ||= []
@@ -102,27 +104,21 @@ class FilterParamsController
         @.filterSpecs[@.selectedSearchType] or []
 
     getIssuesFilterParams: () ->
-        @filterParams.getIssueStatusMap().then (result) ->
-            [
-                name: "Status"
-                param: "status"
-                choices: result
-            ]
+        @q.all([
+            @filterParams.getIssueTypeMap(),
+            @filterParams.getIssueStatusMap()
+        ])
 
     getTasksFilterParams: () ->
         @filterParams.getTaskStatusMap().then (result) ->
             [
-                name: "Status"
-                param: "status"
-                choices: result
+                result
             ]
 
     getUserstoriesFilterParams: () ->
         @filterParams.getUserstoryStatusMap().then (result) ->
             [
-                name: "Status"
-                param: "status"
-                choices: result
+                result
             ]
 
     # getSprintsFilterParams: () ->
@@ -155,7 +151,6 @@ class SearchFormController extends FilterParamsController
         @.selectedSearchType = @routeParams.result_type or "text"
 
         @.params = angular.copy(@routeParams)
-        @.params.filter ||= 'all'
         super
 
     getFiltersTemplate: () ->
@@ -166,8 +161,8 @@ class SearchFormController extends FilterParamsController
 
     selectSearchType: (type) ->
         @loadFilterSpecs(type).then =>
-            @resetParams()
             @.selectedSearchType = type
+            @resetParams()
 
     resetParams: () ->
         @.params = {}
