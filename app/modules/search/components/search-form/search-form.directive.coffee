@@ -17,12 +17,9 @@
 # File: search.directive.coffee
 ###
 
-SearchFormDirective = () ->
+SearchFormDirective = (filterParams) ->
     link = (scope, el, attrs, ctrl) ->
-        # scope.$on "$routeChangeSuccess", () ->
-        #     debugger
-        #     lastRoute = $route.current
-        #     $route.current = lastRoute
+        # nothing
 
     return {
         controller: "SearchForm",
@@ -39,7 +36,7 @@ SearchFormDirective = () ->
     }
 
 SearchFormDirective.$inject = [
-    # "$route"
+    "$tgSearchFilterParamsProvider"
 ]
 
 angular.module('taigaSearch').directive('tgSearchForm', SearchFormDirective)
