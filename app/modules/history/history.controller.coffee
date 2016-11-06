@@ -32,7 +32,10 @@ class HistorySectionController
         @.deleting = null
         @.editMode = {}
         @.viewComments = true
-        @.reverse = @storage.get("orderComments")
+        if @storage.get("orderComments")?
+            @.reverse = @storage.get("orderComments")
+        else
+            @.reverse = true
         @._loadHistory()
 
     _loadHistory: () ->
