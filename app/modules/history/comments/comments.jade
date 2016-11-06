@@ -1,4 +1,11 @@
 section.comments
+
+    tg-comment-wysiwyg(
+        tg-check-permission="{{::vm.canAddCommentPermission}}"
+        on-update="updateComment(text)"
+        type="vm.type"
+    )
+
     .comments-wrapper
         tg-comment.comment(
             ng-repeat="comment in vm.comments track by comment.id"
@@ -15,9 +22,3 @@ section.comments
             on-restore-deleted-comment="vm.onRestoreDeletedComment({commentId: commentId})"
             on-edit-comment="vm.onEditComment({commentId: commentId, commentData: commentData, callback: callback})"
         )
-
-    tg-comment-wysiwyg(
-        tg-check-permission="{{::vm.canAddCommentPermission}}"
-        on-update="updateComment(text)"
-        type="vm.type"
-    )
