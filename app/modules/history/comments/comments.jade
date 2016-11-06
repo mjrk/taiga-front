@@ -1,22 +1,6 @@
 include ../../../partials/common/components/wysiwyg.jade
 
 section.comments
-    .comments-wrapper
-        tg-comment.comment(
-            ng-repeat="comment in vm.comments track by comment.id"
-            ng-class="{'deleted-comment': comment.delete_comment_date}"
-            comment="comment"
-            name="{{vm.name}}"
-            loading="vm.loading"
-            editing="vm.editing"
-            deleting="vm.deleting"
-            object="{{vm.object}}"
-            edit-mode="vm.editMode[comment.id]"
-            on-edit-mode="vm.onEditMode({commentId: commentId})"
-            on-delete-comment="vm.onDeleteComment({commentId: commentId})"
-            on-restore-deleted-comment="vm.onRestoreDeletedComment({commentId: commentId})"
-            on-edit-comment="vm.onEditComment({commentId: commentId, commentData: commentData})"
-        )
     tg-editable-wysiwyg.add-comment(
         ng-model="vm.type"
         tg-check-permission="{{::vm.canAddCommentPermission}}"
@@ -37,3 +21,19 @@ section.comments
                 ng-click="vm.onAddComment()"
                 tg-loading="vm.loading"
             )
+    .comments-wrapper
+        tg-comment.comment(
+            ng-repeat="comment in vm.comments track by comment.id"
+            ng-class="{'deleted-comment': comment.delete_comment_date}"
+            comment="comment"
+            name="{{vm.name}}"
+            loading="vm.loading"
+            editing="vm.editing"
+            deleting="vm.deleting"
+            object="{{vm.object}}"
+            edit-mode="vm.editMode[comment.id]"
+            on-edit-mode="vm.onEditMode({commentId: commentId})"
+            on-delete-comment="vm.onDeleteComment({commentId: commentId})"
+            on-restore-deleted-comment="vm.onRestoreDeletedComment({commentId: commentId})"
+            on-edit-comment="vm.onEditComment({commentId: commentId, commentData: commentData})"
+        )

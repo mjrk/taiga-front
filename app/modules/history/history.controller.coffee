@@ -33,7 +33,10 @@ class HistorySectionController
         @.editMode = {}
         @.viewComments = true
         @._loadHistory()
-        @.reverse = @storage.get("orderComments")
+        if @storage.get("orderComments")?
+            @.reverse = @storage.get("orderComments")
+        else
+            @.reverse = true
 
     _loadHistory: () ->
         @rs.history.get(@.name, @.id).then (history) =>
