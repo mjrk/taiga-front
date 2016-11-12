@@ -52,7 +52,6 @@ SearchResultsTableDirective = ($compile) ->
                 target.append(" ")
             target.append(orderSvg)
 
-        # Draw the arrow the first time
         currentOrder = $ctrl.getRouteParamsFilter("order_by") or "created_date"
         if currentOrder
             colHeadElement = $el.find(".row.title > div[data-fieldname='#{trim(currentOrder, "-")}']")
@@ -69,17 +68,8 @@ SearchResultsTableDirective = ($compile) ->
 
             $scope.$apply ->
                 $ctrl.onChangeOrder(finalOrder).then ->
-                    # Update the arrow
                     $el.find(".row.title > div > tg-svg").remove()
                     addOrderSvg(target, finalOrder)
-
-    # getSearchResultController = (element) ->
-    #     parent = element.parent()
-    #     while parent?
-    #         if parent.attr('tg-search-results')
-    #             return parent.controller('tgSearchResults')
-    #         parent = parent.parent()
-    #     return null
 
     link = (scope, element, attrs) ->
         ctrl = element.controller('tgSearchResults')
@@ -89,7 +79,7 @@ SearchResultsTableDirective = ($compile) ->
         link: link
     }
 
-SearchResultsDirective.$inject = [
+SearchResultsTableDirective.$inject = [
     "$compile"
 ]
 

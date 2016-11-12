@@ -1,0 +1,18 @@
+div.stored-search-input
+    input(
+        type='text'
+        id='stored-search-name'
+        ng-model='vm.storedSearchName'
+    )
+    button.save-stored-search(
+        type="button",
+        ng-click="vm.saveStoredSearchItem()",
+        ng-if="vm.storedSearchName && ! vm.storedSearchUnmodified()"
+    )
+        span(ng-if="vm.storedSearchItemExists()")
+            | Update
+        span(ng-if="! vm.storedSearchItemExists()")
+            | Save
+    span(ng-if="vm.storedSearchUnmodified()")
+        | unmodified
+          
