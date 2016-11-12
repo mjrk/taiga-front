@@ -1,0 +1,36 @@
+div.stored-search-items(ng-if="! vm.isEmpty()")
+    h2 Stored search urls:
+    section.stored-search-items-table.basic-table(
+        ng-class="{empty: !vm.searchResult.length}"
+    )
+        div.row.title
+            div.stored-search-item-name
+                | Name
+            div.stored-search-item-url
+                | URL
+            div.stored-search-item-actions
+                |  
+
+        div.row.table-main(
+            ng-repeat="(name, url) in vm.items"
+        )
+            div.stored-search-item-name
+                | {{name}}
+            div.stored-search-item-url
+                a(
+                    ng-href="{{url}}"
+                    title="{{name}}"
+                    ng-bind="url | limitTo:100"
+                )
+                span(ng-if="url.length > 100")
+                  | ...
+            div.stored-search-item-actions
+                tg-svg(
+                    svg-icon="icon-trash"
+                    svg-title-translate="COMMON.DELETE"
+                    ng-click="vm.deleteItem(name)"
+                    tabindex="0"
+                )
+                
+div.stored-search-items(ng-if="vm.isEmpty()")
+    | No searches have been stored yet.

@@ -23,24 +23,26 @@
             margin: 0 .5rem;
         }
     }
-    input[type="text"] {
-        background: $white;
-        border: 0;
-        padding: 1rem;
+    .search-query {
+        padding-left: 6rem;
         width: 100%;
-        &:focus {
-            outline-color: $primary-light;
-        }
-        &:-webkit-autofill {
-            background: rgba($primary-dark, .5);
+        input[type="text"] {
+            background: $white;
+            border: 0;
+            padding: 1rem;
+            &:focus {
+                outline-color: $primary-light;
+            }
+            &:-webkit-autofill {
+                background: rgba($primary-dark, .5);
+            }
         }
     }
     .search-button {
         @include svg-size(1.5rem);
         fill: $gray-light;
-        left: 1rem;
         position: absolute;
-        right: auto;
+        right: 1rem;
         top: 1rem;
         transition: fill .2s;
         &:hover {
@@ -50,21 +52,22 @@
     }
     .searchbox {
         background-color: $white;
-        input {
-            padding-left: 6.7rem;
-            padding-right: 23rem;
-        }
         .filter-param-input {
             padding-bottom: .2rem;
             text-align: left;
             .param-name {
                 margin-left: .5rem;
-                min-width: 5rem;
+                min-width: 7.3rem;
+            }
+            .save-search-label {
+                margin-left: 1rem;
             }
             .param-name:hover {
                 background: $white;
             }
-            div {
+            .date-input,
+            .filter-param-value,
+            .stored-search-input {
                 display: inline-block;
             }
         }
@@ -75,7 +78,8 @@
     .searchbox-filters,
     .search-mode,
     .filter-param-input {
-        input {
+        input[type=checkbox],
+        input[type=radio] {
             display: none;
         }
         label {
@@ -93,6 +97,18 @@
                 background: $whitish;
                 color: $gray;
             }
+        }
+        .negate-filter-param {
+            margin-right: -.5rem;
+            padding-left: .5rem;
+            padding-right: .3rem;
+            &:hover {
+                background: $red-light;
+                color: $white;
+            }
+        }
+        .select-filter-param {
+            padding-left: .2rem;
         }
     }
     .searchbox-filters {
@@ -136,6 +152,9 @@
             top: 2.1rem;
             z-index: 999;
         }
+    }
+    input[type=submit] {
+        display: none;
     }
 }
 

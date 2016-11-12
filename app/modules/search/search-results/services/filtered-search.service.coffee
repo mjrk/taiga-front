@@ -19,6 +19,42 @@
 
 taiga = @.taiga
 
+hoursDelta = 60 * 60 * 1000
+dateFields =
+  hours_ago: (value) ->
+      new Date(_.now() - parseInt(value) * hoursDelta).toString()
+  days_ago: (value) ->
+      new Date(_.now() - parseInt(value) * 24 * hoursDelta).toString()
+  weeks_ago: (value) ->
+      new Date(_.now() - parseInt(value) * 7 * 24 * hoursDelta).toString()
+  end_of_day: (value) ->
+      date = new Date(value)
+      date.setHours(23)
+      date.setMinutes(59)
+      date.setSeconds(59)
+      date.toString()
+  in_hours: (value) ->
+      new Date(_.now() + parseInt(value) * hoursDelta).toString()
+  in_days: (value) ->
+      new Date(_.now() + parseInt(value) * 24 * hoursDelta).toString()
+  in_weeks: (value) ->
+      new Date(_.now() + parseInt(value) * 7 * 24 * hoursDelta).toString()
+
+
+transformToApi = (field, value) ->
+    if value?.length
+        for key, transform of dateFields
+            if _.startsWith(value, key)
+                transformed_value = value.replace(///^#{key}///, "")
+                transformed_value = transform(transformed_value)
+                if Number.isNaN(transformed_value)
+                    # TODO raise, catch and show error for exception
+                    console.log("#{value} is not a number")
+                    return null
+                return transformed_value
+    value
+
+
 class SearchTypeFiltered extends taiga.Service
     @.$inject = [
           "tgResources"
@@ -28,7 +64,14 @@ class SearchTypeFiltered extends taiga.Service
     constructor: (@rs, @sprintsProvider) ->
         @sprintsProvider(@rs)
 
-    getResults: (type, params) ->
+    getResults: (type, client_params) ->
+        params = {}
+        for k, v of client_params
+            if v?.length
+                params[k] = transformToApi(k, v)
+            else
+                params[k] = v
+
         @rs[type].listInAllProjects(params).then (result) ->
             if result.toJS?
                 result = result.toJS()

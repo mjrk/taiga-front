@@ -23,20 +23,13 @@ class SearchResults
         'tgSearchResultsService',
         '$route',
         'tgAppMetaService',
-        '$translate'
+        '$translate',
+        '$tgSearchFilterParamsProvider'
     ]
 
-    constructor: (@routeParams, @searchResultsService, @route, @appMetaService, @translate) ->
+    constructor: (@routeParams, @searchResultsService, @route, @appMetaService, @translate, @filterParams) ->
         @.page = 1
-
-        # taiga.defineImmutableProperty @, "searchResult", () => return @searchResultsService.searchResult
-        # taiga.defineImmutableProperty @, "nextSearchPage", () => return @searchResultsService.nextSearchPage
-
         @searchResult = null
-
-        # @.q = @routeParams.q
-        # @.filter = @routeParams.filter || 'all'
-        # @.orderBy = @routeParams['order_by'] || ''
 
         @.loadingGlobal = false
         @.loadingList = false
@@ -64,6 +57,15 @@ class SearchResults
 
     getRouteParamsFilter: (name) ->
         @routeParams[name]
+
+    getFilterParamName: (model, param, id) ->
+      filter_spec = @.filterParams.forModel[model]?[param]
+      if filter_spec?
+        for k, choice of filter_spec.choices
+          for detail in choice.details
+            if detail.id == id
+              return detail.name
+      return id
 
     updateRouteParamsFilter: (name, value) ->
         @routeParams[name] = value
@@ -108,6 +110,7 @@ class SearchResults
     search: (params) ->
         if not params?
             params = @routeParams
+        params = _.omit(params, "storedSearchName")
         return @searchResultsService.fetchSearch(params).then (result) =>
             @.activeParams = angular.copy(params)
             @.searchResult = result

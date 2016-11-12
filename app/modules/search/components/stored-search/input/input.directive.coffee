@@ -1,5 +1,5 @@
 ###
-# Copyright (C) 2014-2016 Taiga Agile LLC <taiga@taiga.io>
+# Copyright (C) 2014-2015 Taiga Agile LLC <taiga@taiga.io>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -14,22 +14,29 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-# File: working-on.controller.coffee
+# File: search.directive.coffee
 ###
 
-class SearchHome
-    @.$inject = [
-        'tgAppMetaService',
-        '$translate'
-    ]
+StoredSearchInputDirective = ($timeout) ->
 
-    constructor: (
-        @appMetaService, @translate
-    ) ->
-        title = "Extended search"
-        description = "Full text and filtered search over all projects."
-        @appMetaService.setAll(title, description)
+    link = (scope, el, attrs, ctrl) ->
+        # nothing
 
-angular.module("taigaSearch").controller(
-    "SearchHome", SearchHome
+    return {
+        controller: "StoredSearchInput",
+        controllerAs: "vm"
+        templateUrl: 'search/components/stored-search/input/' +
+          'input.html',
+        bindToController: true,
+        scope: {
+        },
+        link: link
+    }
+
+StoredSearchInputDirective.$inject = [
+    "$timeout"
+]
+
+angular.module('taigaSearch').directive(
+    'tgStoredSearchInput', StoredSearchInputDirective
 )
