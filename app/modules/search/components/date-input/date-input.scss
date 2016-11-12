@@ -1,0 +1,70 @@
+.date-input {
+    input {
+        margin-right: 1rem;
+        width: 10rem;
+    }
+    .date-from,
+    .date-to {
+        position: relative;
+        .clear-date-input {
+            cursor: pointer;
+            display: block;
+            position: absolute;
+            right: 1.3rem;
+            top: 0;
+        }
+    }
+    .date-format {
+        display: inline-block;
+        width: auto;
+        > label {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            line-height: .9rem;
+            min-height: 2.1rem;
+            min-width: 7rem;
+            padding-bottom: 0;
+            padding-top: 0;
+            width: 5.9rem;
+        }
+        &:hover {
+            .date-format-dropdown {
+                animation: dropdownFade .2s cubic-bezier(.09, 0, .99, .01) both;
+                display: block;
+            }
+        }
+        %dropdown {
+            border-radius: .5rem;
+            display: none;
+            position: absolute;
+            top: 2.1rem;
+            z-index: 999;
+        }
+    }
+}
+
+.date-format-dropdown {
+    @extend %dropdown;
+    background: $white;
+    border: 1px solid $gray-light;
+    display: none;
+    min-width: 7.5rem;
+    padding: .3rem;
+    ul {
+        @include arrow('bottom', $gray-light, $gray-light, 1, 8);
+        margin: 0;
+        margin-bottom: .5rem;
+        padding: 0;
+
+    }
+    a {
+        color: $gray-light;
+        display: block;
+        padding: .8rem .5rem;
+        &:hover {
+            background: rgba($white, .1);
+            color: $primary-light;
+        }
+    }
+}

@@ -1,0 +1,22 @@
+.stored-search-items {
+    .stored-search-items-table {
+        display: flex;
+    }
+    .stored-search-item-name {
+        flex: 0 0 200px;
+        text-align: center;
+        width: 200px;
+    }
+    .stored-search-item-url {
+        max-width: 100%;
+    }
+    .stored-search-item-actions {
+        flex: 0 0 100px;
+        margin-left: auto;
+        text-align: center;
+        width: 100px;
+        tg-svg {
+            cursor: pointer;
+        }
+    }
+}

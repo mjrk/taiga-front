@@ -12,7 +12,7 @@
                 abbr(title="{{'ISSUES.TABLE.COLUMNS.VOTES' | translate}}") V
             div.subject(data-fieldname="subject")
                 | {{'ISSUES.TABLE.COLUMNS.SUBJECT' | translate}}
-            div.issue-field(data-fieldname="status")
+            div.issue-field(data-fieldname="status__name")
                 | {{'ISSUES.TABLE.COLUMNS.STATUS' | translate}}
             div.created-field(data-fieldname="created_date")
                 | {{'ISSUES.TABLE.COLUMNS.CREATED' | translate}}
@@ -50,7 +50,7 @@
             div.subject
                 a(
                     href=""
-                    tg-nav="project-issues-detail:project=issue.project_extra_info.slug,ref=issue.ref"
+                    tg-nav="project-tasks-detail:project=issue.project_extra_info.slug,ref=issue.ref"
                     title="#{{ ::issue.ref }} {{ ::issue.subject }}"
                 )
                     span(tg-bo-ref="issue.ref")

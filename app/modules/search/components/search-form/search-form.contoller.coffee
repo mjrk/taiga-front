@@ -36,6 +36,8 @@ class FilterParamsController
         @.filterValues = {}
         if @.selectedSearchType == "text"
             @.params.filter ||= 'all'
+        # else
+        #     @.params.filter
 
     isSelectedFilterValue: (param, choice) ->
         @.filterValues[param] ||= []
@@ -49,13 +51,33 @@ class FilterParamsController
             @setFilterValue(param, choice)
         @.callback()
 
-    toggleAllFilterValues: (filterSpec) ->
+    toggleAllFilterValues: (filterSpec, negated_choice) ->
         param = filterSpec.param
         @.filterValues[param] ||= []
         if @.filterValues[param]?.length > 0
-            @.filterValues[param] = []
+            if negated_choice?
+                idx = @.filterValues[param].indexOf(negated_choice)
+                if (
+                    idx != -1 or
+                    Object.keys(filterSpec.choices).length != \
+                    @.filterValues[param].length + 1
+                )
+                    @.filterValues[param] = (
+                        v for v in Object.values(
+                            filterSpec.choices
+                        ) when v != negated_choice
+                    )
+                else
+                    @.filterValues[param] = [negated_choice]
+            else
+                @.filterValues[param] = []
         else
-            @.filterValues[param] = Object.values(filterSpec.choices)
+            @.filterValues[param] = (
+                v for v in Object.values(
+                    filterSpec.choices
+                ) when v != negated_choice
+            )
+
         @updateFilterValueParam(param)
         @.callback()
 
@@ -95,7 +117,7 @@ class FilterParamsController
         filters = @.filterSpecs[type] or []
 
         if @.filterSpecs[type]? or not @[method]?
-            @q.when(filters)
+            @$q.when(filters)
         else
             @[method]().then (result) =>
                 @.filterSpecs[type] = result
@@ -104,29 +126,47 @@ class FilterParamsController
         @.filterSpecs[@.selectedSearchType] or []
 
     getIssuesFilterParams: () ->
-        @q.all([
+        @$q.all(@commonFilters([
             @filterParams.getIssueTypeMap(),
-            @filterParams.getIssueStatusMap()
-        ])
+            @filterParams.getIssueSeverityMap(),
+            @filterParams.getIssuePriorityMap(),
+            @filterParams.getIssueStatusMap(),
+        ]))
 
     getTasksFilterParams: () ->
-        @filterParams.getTaskStatusMap().then (result) ->
-            [
-                result
-            ]
+        @$q.all(@commonFilters([
+            @filterParams.getTaskStatusMap(),
+            @filterParams.getDateFilter(
+                "Sprint start", "milestone__estimated_start"
+            ),
+            @filterParams.getDateFilter(
+                "Sprint end", "milestone__estimated_end"
+            ),
+        ]))
 
     getUserstoriesFilterParams: () ->
-        @filterParams.getUserstoryStatusMap().then (result) ->
-            [
-                result
-            ]
+        @$q.all(@commonFilters([
+            @filterParams.getUserstoryStatusMap(),
+            @filterParams.getDateFilter(
+                "Sprint start", "milestone__estimated_start"
+            ),
+            @filterParams.getDateFilter(
+                "Sprint end", "milestone__estimated_end"
+            ),
+        ]))
 
-    # getSprintsFilterParams: () ->
-    #     @filterParams.getIssueStatusMap().then (result) ->
-    #         [
-    #             name: "Status"
-    #             choices: result
-    #         ]
+    getSprintsFilterParams: () ->
+        @$q.all(@commonFilters([
+            @filterParams.getDateFilter("Start", "estimated_start"),
+            @filterParams.getDateFilter("End", "estimated_end"),
+        ], "sprints"))
+
+    commonFilters: (moreFilters, model) ->
+        moreFilters.concat _.compact([
+            @filterParams.getDateFilter("Created", "created_date"),
+            @filterParams.getDateFilter("Modified", "modified_date"),
+            @filterParams.getUserMap() if model != "sprints"
+        ])
 
 
 class SearchFormController extends FilterParamsController
@@ -139,7 +179,7 @@ class SearchFormController extends FilterParamsController
     ]
 
     constructor: (
-        @q, @location, @navUrls, @routeParams, @filterParams
+        @$q, @location, @navUrls, @routeParams, @filterParams
     ) ->
         @.searchTypes =
             text: "SEARCH.SEARCH_TEXT"
@@ -153,6 +193,17 @@ class SearchFormController extends FilterParamsController
         @.params = angular.copy(@routeParams)
         super
 
+    paramsChanged: () ->
+        if @.selectedSearchType != @routeParams.result_type
+            return true
+        for k, v of @.params
+            if v?
+                if k == "storedSearchName"
+                    continue
+                if v != @routeParams[k]
+                    return true
+        false
+
     getFiltersTemplate: () ->
         if @.selectedSearchType == "text"
             "search/components/search-form/text-search-params.html"
@@ -163,6 +214,26 @@ class SearchFormController extends FilterParamsController
         @loadFilterSpecs(type).then =>
             @.selectedSearchType = type
             @resetParams()
+
+    getDateSelector: (type) ->
+        selectDate = (params) =>
+            dateGte = params["dateGte"]
+            dateLte = params["dateLte"]
+            changed = false
+            update = {}
+            update[type + "__gte"] = dateGte
+            update[type + "__lte"] = dateLte
+
+            for key of update
+                update[key] ||= null
+                @.params[key] ||= null
+                if @.params[key] != update[key]
+                    @.params[key] = update[key]
+                    changed = true
+
+            if changed
+                @callback()
+        return selectDate
 
     resetParams: () ->
         @.params = {}
@@ -186,7 +257,12 @@ class SearchFormController extends FilterParamsController
         @routeParams.result_type
 
     callback: (params) ->
+
         params = params or @.params
+        for k, v of params
+            if not v?.length
+                params[k] = null
+
         @.params['order_by'] = @routeParams['order_by']
 
         if not @.searchTypes[@.selectedSearchType]?

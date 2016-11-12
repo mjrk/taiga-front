@@ -27,4 +27,4 @@ highlightTerms = ($sce) ->
                 )
             $sce.trustAsHtml(text)
 
-module.filter("highlightTerms", highlightTerms)
+module.filter("highlightTerms", ['$sce', highlightTerms])
