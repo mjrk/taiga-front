@@ -3,6 +3,7 @@ div.stored-search-input
         type='text'
         id='stored-search-name'
         ng-model='vm.storedSearchName'
+        ng-change="vm.justSaved = false"
     )
     button.save-stored-search(
         type="button",
@@ -13,6 +14,9 @@ div.stored-search-input
             | Update
         span(ng-if="! vm.storedSearchItemExists()")
             | Save
-    span(ng-if="vm.storedSearchUnmodified()")
-        | unmodified
+    label.stored-search-saved(ng-if="vm.storedSearchUnmodified()")
+        span(ng-if="vm.justSaved")
+            | saved
+        span(ng-if="! vm.justSaved")
+            | unmodified
           

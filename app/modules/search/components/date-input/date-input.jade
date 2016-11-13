@@ -1,18 +1,18 @@
 div.date-input
     span.date-from
         fieldset.date-format
-          label(
-              href=""
-              title="from"
-          )
-              span {{ vm.fromFormats[vm.selectedFromFormat] }}
-          .date-format-dropdown
-            ul
-              li(ng-repeat="(type, fromFormat) in vm.fromFormats")
-                label(
-                  ng-click="vm.selectFromFormat(type)"
-                  ng-class="{active: vm.selectedFromFormat == type}",
-                ) {{ fromFormat }}
+            label(
+                href=""
+                title="from"
+            )
+                span {{ vm.fromFormats[vm.selectedFromFormat] }}
+            .date-format-dropdown
+                ul
+                    li(ng-repeat="(type, fromFormat) in vm.fromFormats")
+                        label(
+                            ng-click="vm.selectFromFormat(type)"
+                            ng-class="{active: vm.selectedFromFormat == type}",
+                        ) {{ fromFormat }}
         span(ng-if="vm.selectedFromFormat == 'from'")
             input.date-input.date-start(
                 type="text"
@@ -23,7 +23,7 @@ div.date-input
                 placeholder="from"
             )
             span.clear-date-input(ng-if="vm.dateGte", ng-click="vm.dateGte = null")
-              | x
+                | x
         span(ng-if="vm.selectedFromFormat != 'from'")
             input.date-input.date-start(
                 type="text"
@@ -32,18 +32,18 @@ div.date-input
             )
     span.date-to
       fieldset.date-format
-        label(
-            href=""
-            title="to"
-        )
-            span {{ vm.toFormats[vm.selectedToFormat] }}
-        .date-format-dropdown
-          ul
-            li(ng-repeat="(type, toFormat) in vm.toFormats")
-              label(
-                ng-click="vm.selectToFormat(type)"
-                ng-class="{active: vm.selectedToFormat == type}",
-              ) {{ toFormat }}
+          label(
+              href=""
+              title="to"
+          )
+              span {{ vm.toFormats[vm.selectedToFormat] }}
+          .date-format-dropdown
+              ul
+                li(ng-repeat="(type, toFormat) in vm.toFormats")
+                    label(
+                        ng-click="vm.selectToFormat(type)"
+                        ng-class="{active: vm.selectedToFormat == type}",
+                    ) {{ toFormat }}
       span(ng-if="vm.selectedToFormat == 'end_of_day' || vm.selectedToFormat == 'before'")
           input.date-input.date-start(
               type="text"

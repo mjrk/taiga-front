@@ -89,11 +89,13 @@ class FilterParamsController
     updateFilterValueParam: (param) ->
         paramValues = @.filterValues[param]
         if paramValues?.length > 0
-            @.params[param] = _.flatten(
+            paramsValues = _.flatten(
                 (
                     e.id for e in c.details
                 ) for c in paramValues
-            ).join(",")
+            )
+            paramsValues.sort()
+            @.params[param] = paramsValues.join(",")
         else
             @.params[param] = null
 
