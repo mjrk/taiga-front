@@ -29,6 +29,8 @@ class DateInputController
           hours_ago: "hours ago"
           days_ago: "days ago"
           weeks_ago: "weeks ago"
+          months_ago: "months ago"
+          years_ago: "years ago"
         @.selectedFromFormat = "from"
         @.timeDeltaFrom = null
 
@@ -36,8 +38,8 @@ class DateInputController
           end_of_day: "Until"
           before: "Before"
           in_hours: "in hours"
-          in_days: "in days"
-          in_weeks: "in weeks"
+          in_days: "in months"
+          in_weeks: "in years"
         @.selectedToFormat = "end_of_day"
         @.timeDeltaTo = null
 
