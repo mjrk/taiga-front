@@ -20,13 +20,21 @@
 taiga = @.taiga
 
 hoursDelta = 60 * 60 * 1000
+daysDelta = hoursDelta * 24
+montshDelta = daysDelta * 30
+
+
 dateFields =
   hours_ago: (value) ->
       new Date(_.now() - parseInt(value) * hoursDelta).toString()
   days_ago: (value) ->
-      new Date(_.now() - parseInt(value) * 24 * hoursDelta).toString()
+      new Date(_.now() - parseInt(value) * daysDelta).toString()
   weeks_ago: (value) ->
-      new Date(_.now() - parseInt(value) * 7 * 24 * hoursDelta).toString()
+      new Date(_.now() - parseInt(value) * daysDelta * 7).toString()
+  months_ago: (value) ->
+      new Date(_.now() - parseInt(value) * monthsDelta).toString()
+  years_ago: (value) ->
+      new Date(_.now() - parseInt(value) * monthsDelta * 12).toString()
   end_of_day: (value) ->
       date = new Date(value)
       date.setHours(23)
@@ -36,9 +44,13 @@ dateFields =
   in_hours: (value) ->
       new Date(_.now() + parseInt(value) * hoursDelta).toString()
   in_days: (value) ->
-      new Date(_.now() + parseInt(value) * 24 * hoursDelta).toString()
+      new Date(_.now() + parseInt(value) * daysDelta).toString()
   in_weeks: (value) ->
-      new Date(_.now() + parseInt(value) * 7 * 24 * hoursDelta).toString()
+      new Date(_.now() + parseInt(value) * daysDelta * 7).toString()
+  in_months: (value) ->
+      new Date(_.now() + parseInt(value) * monthsDelta).toString()
+  in_years: (value) ->
+      new Date(_.now() + parseInt(value) * monthsDelta * 12).toString()
 
 
 transformToApi = (field, value) ->

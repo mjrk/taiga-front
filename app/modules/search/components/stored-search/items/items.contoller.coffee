@@ -18,6 +18,7 @@
 ###
 
 taiga = @.taiga
+taigaConfig = @.taigaConfig
 
 generateHash = taiga.generateHash
 
@@ -35,6 +36,13 @@ class StoredSearchItemsController
 
     isEmpty: () ->
         Object.keys(@.items).length == 0
+
+    staticSearchesEmpty: () ->
+        @getStaticSeaches().length == 0
+
+    getStaticSeaches: () ->
+        taigaConfig.staticSearches or []
+
 
 angular.module("taigaSearch").controller(
     "StoredSearchItems", StoredSearchItemsController

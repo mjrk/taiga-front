@@ -37,12 +37,14 @@ class StoredSearchInputController
     ) ->
         @.initialParams = angular.copy(@routeParams)
         @.storedSearchName = @routeParams.storedSearchName or ""
+        @.justSaved = false
 
     saveStoredSearchItem: () ->
         @routeParams.storedSearchName = @.storedSearchName
         @storedSearch.updateStoredSearchItem(@.storedSearchName, =>
             @generateUrl(updateLocation=true)
         )
+        @.justSaved = true
 
     generateUrl: (updateLocation=false) ->
         result_type = @routeParams["result_type"] or "text"

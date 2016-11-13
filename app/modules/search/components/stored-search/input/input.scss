@@ -7,4 +7,14 @@
     button {
         padding: .5rem;
     }
+    label {
+        &.stored-search-saved {
+            background-color: $mass-white;
+            cursor: default;
+            transition: none;
+            &:hover {
+                background-color: $mass-white;
+            }
+        }
+    }
 }

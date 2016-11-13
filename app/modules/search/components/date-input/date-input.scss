@@ -1,6 +1,14 @@
 .date-input {
+    > span {
+        label span {
+            display: inline-block;
+            padding-top: .2rem;
+        }
+    }
     input {
         margin-right: 1rem;
+        padding-bottom: .3rem;
+        padding-top: .3rem;
         width: 10rem;
     }
     .date-from,
@@ -14,11 +22,17 @@
             top: 0;
         }
     }
+    fieldset {
+        &.date-format label {
+            padding-right: .1rem;
+        }
+    }
     .date-format {
         display: inline-block;
         width: auto;
         > label {
             align-items: center;
+            background-color: $mass-white;
             display: flex;
             justify-content: center;
             line-height: .9rem;
