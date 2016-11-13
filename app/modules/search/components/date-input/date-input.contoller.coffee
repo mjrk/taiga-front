@@ -38,8 +38,10 @@ class DateInputController
           end_of_day: "Until"
           before: "Before"
           in_hours: "in hours"
-          in_days: "in months"
-          in_weeks: "in years"
+          in_days: "in days"
+          in_weeks: "in weeks"
+          in_months: "in months"
+          in_years: "in years"
         @.selectedToFormat = "end_of_day"
         @.timeDeltaTo = null
 
