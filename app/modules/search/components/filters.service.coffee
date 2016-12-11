@@ -28,6 +28,27 @@ searchFilterParamsProvider = ($repo, $model, $storage) ->
             service.forModel[model][r["param"]] = r
             r
 
+    service.getProjectMap = () ->
+        return $repo.queryMany("projects").then (result) ->
+            map = {}
+            for description in result
+                key = description.name.toLowerCase()
+                if not map[key]
+                    map[key] =
+                        name: description.name
+                        slug: description.slug
+                        details: []
+                map[key].details.push description
+
+            r =
+              name: "Project"
+              param: "project"
+              choices: map
+
+            service.forModel[model] ||= {}
+            service.forModel[model][r["param"]] = r
+            r
+
     getGenericMap = (model, resource, param) ->
         label = _.capitalize(param)
         return $repo.queryMany(resource).then (result) ->
