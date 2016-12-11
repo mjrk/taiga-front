@@ -104,7 +104,7 @@ class FilterParamsController
             if @routeParams[filterSpec.param]?
                 values = @routeParams[filterSpec.param].split(",")
                 @.filterValues[filterSpec.param] = (
-                    c for c in Object.values(
+                    c for c in _.values(
                         filterSpec.choices
                     ) when includesAny(c.details, values)
                 )
@@ -165,6 +165,7 @@ class FilterParamsController
 
     commonFilters: (moreFilters, model) ->
         moreFilters.concat _.compact([
+            @filterParams.getProjectMap(),
             @filterParams.getDateFilter("Created", "created_date"),
             @filterParams.getDateFilter("Modified", "modified_date"),
             @filterParams.getUserMap() if model != "sprints"
