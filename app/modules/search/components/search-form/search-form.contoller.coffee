@@ -63,7 +63,7 @@ class FilterParamsController
                     @.filterValues[param].length + 1
                 )
                     @.filterValues[param] = (
-                        v for v in Object.values(
+                        v for v in _.values(
                             filterSpec.choices
                         ) when v != negated_choice
                     )
@@ -73,7 +73,7 @@ class FilterParamsController
                 @.filterValues[param] = []
         else
             @.filterValues[param] = (
-                v for v in Object.values(
+                v for v in _.values(
                     filterSpec.choices
                 ) when v != negated_choice
             )
