@@ -14,12 +14,14 @@
                 | {{'ISSUES.TABLE.COLUMNS.PRIORITY' | translate}}
             div.compact-field(data-fieldname="total_voters")
                 abbr(title="{{'ISSUES.TABLE.COLUMNS.VOTES' | translate}}") V
-            div.subject(data-fieldname="subject")
+            div.subject-field(data-fieldname="subject")
                 | {{'ISSUES.TABLE.COLUMNS.SUBJECT' | translate}}
             div.issue-field(data-fieldname="status__name")
                 | {{'ISSUES.TABLE.COLUMNS.STATUS' | translate}}
-            div.created-field(data-fieldname="created_date")
+            div.date-field(data-fieldname="created_date")
                 | {{'ISSUES.TABLE.COLUMNS.CREATED' | translate}}
+            div.date-field(data-fieldname="due_date")
+                | Due date
             div.assigned-field(data-fieldname="assigned_to")
                 | {{'ISSUES.TABLE.COLUMNS.ASSIGNED_TO' | translate}}
 
@@ -48,7 +50,7 @@
                 title="{{ 'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate:{total:issue.total_voters||0}:'messageformat' }}"
             )
                 span {{ ::issue.total_voters }}
-            div.subject
+            div.subject-field
                 a(
                     href=""
                     tg-nav="project-issues-detail:project=issue.project_extra_info.slug,ref=issue.ref"
@@ -64,7 +66,9 @@
             div.issue-field
                 | {{issue.status_extra_info.name}}
 
-            div.created-field(tg-bo-bind="issue.created_date|momentFormat:'DD MMM YYYY HH:mm'")
+            div.date-field(tg-bo-bind="issue.created_date|momentFormat:'DD MMM YYYY HH:mm'")
+
+            div.date-field(tg-bo-bind="issue.due_date|momentFormat:'DD MMM YYYY HH:mm'")
 
             div.assigned-field
                 div.issue-assignedto(ng-if="issue.assigned_to")

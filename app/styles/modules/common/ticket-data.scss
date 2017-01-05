@@ -54,6 +54,19 @@
         color: currentColor;
         margin-left: .25rem;
     }
+    .due-date {
+        position: relative;
+        input {
+            width: 13.9rem;
+        }
+        .clear-date-input {
+            cursor: pointer;
+            display: block;
+            position: absolute;
+            right: .5rem;
+            top: .5rem;
+        }
+    }
 }
 
 .ticket-status {
