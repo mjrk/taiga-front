@@ -14,6 +14,8 @@ section.issues-table.basic-table(ng-class="{empty: !issues.length}")
              | {{"ISSUES.TABLE.COLUMNS.STATUS" | translate}}
         div.created-field(data-fieldname="created_date")
              | {{"ISSUES.TABLE.COLUMNS.CREATED" | translate}}
+        div.due-date-field(data-fieldname="due_date")
+             | Due Date
         div.assigned-field(data-fieldname="assigned_to")
              | {{"ISSUES.TABLE.COLUMNS.ASSIGNED_TO" | translate}}
 
@@ -75,6 +77,11 @@ section.issues-table.basic-table(ng-class="{empty: !issues.length}")
         div.created-field(
             tg-bo-bind="issue.created_date|momentFormat:'DD MMM YYYY'"
             tg-bo-title="issue.created_date|momentFormat:'DD MMM YYYY HH:mm'"
+        )
+
+        div.due-date-field(
+            tg-bo-bind="issue.due_date|momentFormat:'DD MMM YYYY'"
+            tg-bo-title="issue.due_date|momentFormat:'DD MMM YYYY HH:mm'"
         )
 
         div.assigned-field(tg-issue-assigned-to-inline-edition="issue")

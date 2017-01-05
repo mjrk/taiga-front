@@ -406,6 +406,17 @@
                 margin: 0;
             }
         }
+        .clear-date-input {
+            cursor: pointer;
+            display: block;
+            position: absolute;
+            right: .5rem;
+            top: .5rem;
+        }
+        .due-date input {
+            margin-left: 25.4rem;
+            width: 12.1rem;
+        }
     }
 
     textarea {

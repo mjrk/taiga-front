@@ -610,6 +610,81 @@ module.directive("tgIssuePriorityButton", ["$rootScope", "$tgRepo", "$tgConfirm"
 
 
 #############################################################################
+## Issue due-date select directive
+#############################################################################
+
+IssueDueDateSelectDirective = ($rootScope, $repo, $confirm, $loading, $modelTransform, $template, $compile, $translate) ->
+
+    template = $template.get("issue/issue-due-date-select.html", true)
+
+    link = ($scope, $el, $attrs, $model) ->
+        prettyDate = $translate.instant("COMMON.PICKERDATE.FORMAT")
+        initialDueDate = null
+
+        render = (issue) =>
+            # due_date = issue.due_date or ""
+
+            html = template({
+                # due_date: due_date
+            })
+
+            html = $compile(html)($scope)
+
+            $el.html(html)
+
+        save = (due_date) ->
+            $.fn.popover().closeAll()
+
+            currentLoading = $loading()
+                .target($el.find(".level-name"))
+                .start()
+
+            transform = $modelTransform.save (issue) ->
+                issue.due_date = due_date
+
+                return issue
+
+            onSuccess = ->
+                initialDueDate = due_date
+                $rootScope.$broadcast("object:updated")
+                currentLoading.finish()
+
+            onError = ->
+                $confirm.notify("error")
+                currentLoading.finish()
+
+            transform.then(onSuccess, onError)
+
+        $scope.$watch () ->
+            return $model.$modelValue?.priority
+        , () ->
+            issue = $model.$modelValue
+            if issue
+                issue.due_date = issue.due_date or ""
+                if initialDueDate is null
+                    initialDueDate = issue.due_date
+                $scope.due_date = issue.due_date
+                render(issue)
+
+        $scope.$watch "due_date", (due_date) ->
+            due_date = moment(due_date, prettyDate).format("YYYY-MM-DD")
+            if initialDueDate != null
+              if due_date != initialDueDate
+                  save(due_date)
+
+        $scope.$on "$destroy", ->
+            $el.off()
+
+    return {
+        link: link
+        restrict: "EA"
+        require: "ngModel"
+    }
+
+module.directive("tgIssueDueDateSelect", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation", "$tgTemplate", "$compile", "$translate", IssueDueDateSelectDirective])
+
+
+#############################################################################
 ## Promote Issue to US button directive
 #############################################################################
 

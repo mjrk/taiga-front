@@ -1,0 +1,13 @@
+.due-date
+    label
+        | Due date
+    input(
+        type="text"
+        name="dueDate"
+        ng-model="due_date"
+        data-required="true"
+        tg-date-selector
+        placeholder="due date"
+    )
+    span.clear-date-input(ng-click="due_date = ''")
+        | x
