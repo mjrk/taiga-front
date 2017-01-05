@@ -667,8 +667,11 @@ IssueDueDateSelectDirective = ($rootScope, $repo, $confirm, $loading, $modelTran
                 render(issue)
 
         $scope.$watch "due_date", (due_date) ->
-            due_date = moment(due_date, prettyDate).format("YYYY-MM-DD")
             if initialDueDate != null
+              if due_date
+                  due_date = moment(due_date, prettyDate).format("YYYY-MM-DD")
+              else
+                  due_date = null
               if due_date != initialDueDate
                   save(due_date)
 
