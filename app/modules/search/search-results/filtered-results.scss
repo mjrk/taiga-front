@@ -19,9 +19,19 @@
         width: 150px;
     }
     .date-field {
-        flex: 1 0 140px;
+        flex: 1 0 100px;
         padding: 0 1rem;
         position: relative;
         text-align: left;
+    }
+    .issue-field {
+        flex: 0 0 100px;
+        padding: 0 1rem;
+        position: relative;
+    }
+    .subject-field {
+        flex: 1 0 200px;
+        padding: 0 1rem;
+        position: relative;
     }
 }

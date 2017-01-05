@@ -27,7 +27,18 @@ form
                 ng-model="issue.severity"
                 ng-options="s.id as s.name for s in severityList"
             )
-
+    .fieldset-row
+        fieldset.due-date
+            input(
+                type="text"
+                name="dueDate"
+                ng-model="issue.due_date"
+                data-required="true"
+                tg-date-selector
+                placeholder="due date"
+            )
+            span.clear-date-input(ng-click="issue.due_date = ''")
+                | x
     fieldset
         tg-tag-line-common.tags-block(
             ng-if="project && createIssueOpen"
