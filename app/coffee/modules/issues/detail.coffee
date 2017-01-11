@@ -619,7 +619,7 @@ IssueDueDateSelectDirective = ($rootScope, $repo, $confirm, $loading, $modelTran
 
     link = ($scope, $el, $attrs, $model) ->
         prettyDate = $translate.instant("COMMON.PICKERDATE.FORMAT")
-        initialDueDate = null
+        initialDueDate = false
 
         render = (issue) =>
             # due_date = issue.due_date or ""
@@ -661,19 +661,19 @@ IssueDueDateSelectDirective = ($rootScope, $repo, $confirm, $loading, $modelTran
             issue = $model.$modelValue
             if issue
                 issue.due_date = issue.due_date or ""
-                if initialDueDate is null
+                if initialDueDate is false
                     initialDueDate = issue.due_date
                 $scope.due_date = issue.due_date
                 render(issue)
 
         $scope.$watch "due_date", (due_date) ->
-            if initialDueDate != null
-              if due_date
-                  due_date = moment(due_date, prettyDate).format("YYYY-MM-DD")
-              else
-                  due_date = null
-              if due_date != initialDueDate
-                  save(due_date)
+            if initialDueDate != false
+                if due_date
+                    due_date = moment(due_date, prettyDate).format("YYYY-MM-DD")
+                else
+                    due_date = null
+                if due_date != initialDueDate
+                    save(due_date)
 
         $scope.$on "$destroy", ->
             $el.off()
