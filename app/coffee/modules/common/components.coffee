@@ -81,6 +81,12 @@ DateSelectorDirective = ($rootscope, datePickerConfigService) ->
 
             $el.picker.setDate(val)
 
+        # alternate version when using ng-model to avoid circular triggers
+        # without breaking the sprint-add-edit date functionality 
+        $scope.$watch $attrs.ngModel, (val) ->
+            initialize() if val? and not $el.picker
+            $el.picker.setDate(val) if val?
+
         $scope.$on "$destroy", ->
             $el.off()
             unbind()
