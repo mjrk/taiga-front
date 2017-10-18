@@ -8,8 +8,9 @@ section.related-tasks(
     .related-tasks-body
         .row.single-related-task.js-related-task(
             ng-repeat="task in tasks"
-            ng-class="{closed: task.is_closed, blocked: task.is_blocked, iocaine: task.is_iocaine}"
-            tg-related-task-row
-            ng-model="task"
         )
+            .task-name
+                a.clickable(tg-nav="project-tasks-detail:project=project.slug,ref=task.ref")
+                    span \#{{ task.ref }} {{ task.subject }}
+            span.task-row-wrapper(tg-related-task-row ng-model="task")
         div(tg-related-task-create-form)
