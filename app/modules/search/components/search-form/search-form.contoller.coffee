@@ -128,7 +128,6 @@ class FilterParamsController
         @.filterSpecs[@.selectedSearchType] or []
 
     getIssuesFilterParams: () ->
-        console.log("caslaslasas")
         @$q.all(@commonFilters([
             @filterParams.getIssueTypeMap(),
             @filterParams.getIssueSeverityMap(),
