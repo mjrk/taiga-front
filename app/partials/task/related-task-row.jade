@@ -1,9 +1,3 @@
-.task-name
-    a.clickable(
-        tg-nav="project-tasks-detail:project=project.slug,ref=task.ref")
-        span #<%- task.ref %>
-        span(ng-non-bindable) <%- task.subject %>
-
 .task-settings
     <% if(perms.modify_task) { %>
     a.edit-task(
