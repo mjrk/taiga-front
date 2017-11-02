@@ -1,6 +1,7 @@
 section.comments
 
     tg-comment-wysiwyg(
+        ng-if="vm.reverse"
         tg-check-permission="{{::vm.canAddCommentPermission}}"
         on-update="updateComment(text)"
         type="vm.type"
@@ -22,3 +23,10 @@ section.comments
             on-restore-deleted-comment="vm.onRestoreDeletedComment({commentId: commentId})"
             on-edit-comment="vm.onEditComment({commentId: commentId, commentData: commentData, callback: callback})"
         )
+
+    tg-comment-wysiwyg(
+        ng-if="!vm.reverse"
+        tg-check-permission="{{::vm.canAddCommentPermission}}"
+        on-update="updateComment(text)"
+        type="vm.type"
+    )

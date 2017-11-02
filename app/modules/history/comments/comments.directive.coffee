@@ -29,6 +29,7 @@ CommentsDirective = () ->
             name: "@",
             object: "@",
             comments: "<",
+            reverse: "<",
             onEditMode: "&",
             onDeleteComment: "&",
             onRestoreDeletedComment: "&",
