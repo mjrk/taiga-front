@@ -151,10 +151,15 @@ RelatedTaskStatusDirective = ($repo, $template) ->
             task.status = target.data("status-id")
             $el.find(".pop-status").popover().close()
             updateTaskStatus($el, task, $scope.taskStatusById)
+            old_assigned_to = task.assigned_to
 
             if autoSave
                 $scope.$apply () ->
-                    $repo.save(task).then ->
+                    $repo.save(task).then (data) ->
+                        if old_assigned_to != data.assigned_to and not data.assigned_to
+                            $el.parent().find(".avatar").html("")
+                            $el.parent().find(".task-assignedto").attr('title', "Not assigned")
+
                         $scope.$eval($attrs.onUpdate)
                         $scope.$emit("related-tasks:status-changed")
 
