@@ -15,6 +15,7 @@ section.history(
     tg-comments(
         ng-if="vm.viewComments"
         comments="vm.comments"
+        reverse="vm.reverse"
         on-delete-comment="vm.deleteComment(commentId)"
         on-restore-deleted-comment="vm.restoreDeletedComment(commentId)"
         on-edit-mode="vm.toggleEditMode(commentId)"
