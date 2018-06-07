@@ -142,6 +142,9 @@ class FilterParamsController
         @$q.all(@commonFilters([
             @filterParams.getTaskStatusMap(),
             @filterParams.getDateFilter(
+                "Due date", "due_date"
+            ),
+            @filterParams.getDateFilter(
                 "Sprint start", "milestone__estimated_start"
             ),
             @filterParams.getDateFilter(
@@ -152,6 +155,9 @@ class FilterParamsController
     getUserstoriesFilterParams: () ->
         @$q.all(@commonFilters([
             @filterParams.getUserstoryStatusMap(),
+            @filterParams.getDateFilter(
+                "Due date", "due_date"
+            ),
             @filterParams.getDateFilter(
                 "Sprint start", "milestone__estimated_start"
             ),

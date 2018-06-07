@@ -33,7 +33,7 @@ module = angular.module("taigaIssues")
 ## Issue Create Lightbox Directive
 #############################################################################
 
-CreateIssueDirective = ($repo, $confirm, $rootscope, lightboxService, $loading, $q, $translate, attachmentsService) ->
+CreateIssueDirective = ($repo, $confirm, $rootscope, lightboxService, $loading, $q, attachmentsService) ->
     link = ($scope, $el, $attrs) ->
         form = $el.find("form").checksley()
         $scope.issue = {}
@@ -55,7 +55,6 @@ CreateIssueDirective = ($repo, $confirm, $rootscope, lightboxService, $loading, 
                 type: project.default_issue_type
                 priority: project.default_priority
                 severity: project.default_severity
-                due_date: ""
                 tags: []
             }
 
@@ -125,11 +124,6 @@ CreateIssueDirective = ($repo, $confirm, $rootscope, lightboxService, $loading, 
             if not form.validate()
                 return
 
-            prettyDate = $translate.instant("COMMON.PICKERDATE.FORMAT")
-            $scope.issue.due_date = moment(
-                $scope.issue.due_date, prettyDate
-            ).format("YYYY-MM-DD")
-
             currentLoading = $loading()
                 .target(submitButton)
                 .start()
@@ -157,7 +151,7 @@ CreateIssueDirective = ($repo, $confirm, $rootscope, lightboxService, $loading, 
     return {link:link}
 
 module.directive("tgLbCreateIssue", ["$tgRepo", "$tgConfirm", "$rootScope", "lightboxService", "$tgLoading",
-                                     "$q", "$translate", "tgAttachmentsService", CreateIssueDirective])
+                                     "$q", "tgAttachmentsService", CreateIssueDirective])
 
 
 #############################################################################
