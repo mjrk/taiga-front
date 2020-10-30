@@ -1,0 +1,29 @@
+tg-lightbox-close
+
+.change-project-container
+  .change-project-header
+    h2.title {{ 'COMMON.CHANGE_PROJECT.MOVE_TO_ANOTHER_PROJECT'|translate }}
+
+  .change-project-controls
+    p(ng-if="!vm.projects.length") {{ 'COMMON.CHANGE_PROJECT.NO_PROJECTS'|translate }}
+    div(ng-if="vm.projects.length > 0")
+      fieldset
+        label {{ 'COMMON.CHANGE_PROJECT.WHICH_PROJECT'|translate }}
+        select.project-select(
+            ng-model="vm.selectedProjectId"
+            ng-options="p.id as p.name for p in vm.projects"
+            id="project-selector-dropdown"
+            autofocus
+        )
+            option(
+                value=""
+                disabled
+                selected
+                translate="COMMON.CHANGE_PROJECT.SELECT_DESTINATION_PLACEHOLDER"
+            )
+      button.button-green.move-button(
+          href=""
+          ng-click="vm.submit()"
+          translate="COMMON.SAVE"
+          ng-disabled="!(vm.selectedProjectId)"
+      )

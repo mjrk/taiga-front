@@ -174,6 +174,12 @@
         "DUE_DATE": {
             "TITLE_ACTION_SET_DUE_DATE": "Set due date"
         },
+        "CHANGE_PROJECT": {
+            "MOVE_TO_ANOTHER_PROJECT": "Move to another project",
+            "NO_PROJECTS": "There are no projects available",
+            "SELECT_DESTINATION_PLACEHOLDER": "Select destination",
+            "WHICH_PROJECT": "Which project?"
+        },
         "ASSIGNED_USERS": {
             "ADD": "Select assigned user",
             "ADD_ASSIGNED": "Add assigned",

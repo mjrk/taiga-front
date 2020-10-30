@@ -24,6 +24,12 @@ DetailHeaderDirective = () ->
 
     link = (scope, el, attrs, ctrl) ->
         ctrl._checkPermissions()
+        el.on "click", ".project-data", (event) ->
+            event.preventDefault()
+            event.stopPropagation()
+            return if not ctrl.canChangeProject()
+
+            el.find(".pop-change-project").popover().open()
 
     return {
         link: link,

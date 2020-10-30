@@ -46,7 +46,18 @@
             tg-svg(svg-icon="icon-close")
 
 .detail-project
-    .project-name(ng-if="vm.project.name ") {{ vm.project.name }}
+    .project-data(ng-class="{clickable: vm.canChangeProject()}")
+        span.project-name(ng-if="vm.project.name ") {{ vm.project.name }}
+        span(ng-if="vm.canChangeProject()")
+            tg-svg(svg-icon="icon-arrow-down")
+            ul.popover.pop-change-project
+                li
+                    span.label
+                        tg-change-project(
+                            tg-check-permission="modify_issue",
+                            item="vm.item"
+                        )
+
     .section-name {{ vm.sectionName }}
 
 //- Blocked description

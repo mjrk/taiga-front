@@ -1,0 +1,23 @@
+.lightbox-change-project .change-project-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 550px;
+    width: 100%;
+    .change-project-header {
+        margin: 0 auto;
+        max-width: 400px;
+        text-align: center;
+    }
+    .change-project-controls {
+        p {
+            margin-bottom: 2.5em;
+            text-align: center;
+        }
+        .project-select {
+            margin-top: .5em;
+        }
+        .move-button {
+            width: 100%;
+        }
+    }
+}

@@ -27,7 +27,20 @@
             opacity: 1;
         }
     }
-
+    .project-data {
+        .popover {
+            @include popover(200px, 60px, 15px, '', '', 0, '', '', '', 15px, 'left');
+            text-transform: none;
+            li:hover a {
+                background: lighten($grey-02, 3%);
+            }
+        }
+        .icon {
+            height: .6rem;
+            margin: 0 0 .125rem .125rem;
+            width: .6rem;
+        }
+    }
     .detail-header-line {
         @include font-size(small);
         margin: .5rem 0 0;

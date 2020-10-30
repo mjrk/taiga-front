@@ -81,4 +81,10 @@ class DetailHeaderController
             return item
         return transform.then(onEditSubjectSuccess, onEditSubjectError)
 
+    canChangeProject: () ->
+        return (
+            @.item._name == "issues" and
+            @.project.my_permissions.indexOf("modify_issue") != -1
+        )
+
 module.controller("DetailHeaderCtrl", DetailHeaderController)
