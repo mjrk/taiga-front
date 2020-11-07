@@ -7,6 +7,7 @@ tg-lightbox-close
   .change-project-controls
     p(ng-if="!vm.projects.length") {{ 'COMMON.CHANGE_PROJECT.NO_PROJECTS'|translate }}
     div(ng-if="vm.projects.length > 0")
+      p {{ 'COMMON.CHANGE_PROJECT.MOVE_HINT'|translate }}
       fieldset
         label {{ 'COMMON.CHANGE_PROJECT.WHICH_PROJECT'|translate }}
         select.project-select(

@@ -83,8 +83,11 @@ class DetailHeaderController
 
     canChangeProject: () ->
         return (
-            @.item._name == "issues" and
-            @.project.my_permissions.indexOf("modify_issue") != -1
+          @.item._name == "issues" and
+          @.project.my_permissions.indexOf("modify_issue") != -1
+        ) or (
+          @.item._name == "userstories" and
+          @.project.my_permissions.indexOf("modify_us") != -1
         )
 
 module.controller("DetailHeaderCtrl", DetailHeaderController)

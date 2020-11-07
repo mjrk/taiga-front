@@ -178,7 +178,8 @@
             "MOVE_TO_ANOTHER_PROJECT": "Move to another project",
             "NO_PROJECTS": "There are no projects available",
             "SELECT_DESTINATION_PLACEHOLDER": "Select destination",
-            "WHICH_PROJECT": "Which project?"
+            "WHICH_PROJECT": "Which project?",
+            "MOVE_HINT": "Use with caution! Attachments are not moved and you may have to reassign color tags after the move."
         },
         "ASSIGNED_USERS": {
             "ADD": "Select assigned user",
