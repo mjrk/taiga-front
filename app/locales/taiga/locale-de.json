@@ -174,6 +174,13 @@
         "DUE_DATE": {
             "TITLE_ACTION_SET_DUE_DATE": "Fälligkeitsdatum setzen"
         },
+        "CHANGE_PROJECT": {
+            "MOVE_TO_ANOTHER_PROJECT": "In anderes Projekt verschieben",
+            "NO_PROJECTS": "Keine Projete verfügbar",
+            "SELECT_DESTINATION_PLACEHOLDER": "Ziel wählen",
+            "WHICH_PROJECT": "Welche Projekt?",
+            "MOVE_HINT": "Use with caution! Attachments are not moved and you may have to reassign color tags after the move."
+        },
         "ASSIGNED_USERS": {
             "ADD": "Zugewiesenen Benutzer wählen",
             "ADD_ASSIGNED": "Zugewiesenen hinzufügen",

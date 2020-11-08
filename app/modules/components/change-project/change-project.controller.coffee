@@ -30,19 +30,6 @@ class ChangeProjectController
     constructor: (@translate, @tgLightboxFactory, @projectService,  @rootscope) ->
         @.disabled = false
 
-    # checkOpenItems: () ->
-    #     return _.some(Object.keys(@.openItems), (x) => @.openItems[x].length > 0)
-    #
-    # getProjects: () ->
-    #     return if !@.projects or @.permissions.indexOf("modify_issue") == -1
-    #     @.openItems.projects = []
-    #     @.projects.map (project) =>
-    #         if project.is_closed is false
-    #             @.openItems.projects.push({
-    #                 project_id: project.id
-    #             })
-    #     @.hasOpenItems = @checkOpenItems()
-
     changeProject: () ->
         if @.disabled is not true
             @tgLightboxFactory.create(

@@ -1,0 +1,64 @@
+
+.time-spent-wrapper {
+    display: flex;
+    margin: 0 2rem .5rem 0;
+    transition: all .2s linear;
+    .detail-time-spent-text {
+        color: $grayer;
+        line-height: 2rem;
+        margin: 0;
+    }
+    .time-spent-text {
+        margin: .5rem .55rem;
+        margin-bottom: .62rem;
+    }
+    .detail-edit-time-spent {
+        cursor: pointer;
+        margin-left: .5rem;
+        opacity: 0;
+        transition: opacity .2s;
+    }
+
+    .time-spent-icon {
+        margin-right: .5rem;
+        position: relative;
+        top: .55rem;
+        svg {
+            @include svg-size(1.2rem);
+        }
+    }
+}
+
+.time-spent-wrapper.running {
+    .time-spent-text {
+        cursor: not-allowed;
+    }
+}
+
+.time-spent-wrapper:hover {
+    .detail-edit-time-spent {
+        opacity: 1;
+    }
+}
+
+.edit-time-spent-wrapper {
+    @include font-type(text);
+    display: flex;
+    flex: 1;
+    margin-right: 1.5rem;
+    .edit-time-spent-input {
+        background: $white;
+        flex: 1;
+    }
+    .edit-time-spent-button {
+        background: none;
+        display: inline;
+        transition: fill .2s;
+        &:hover {
+            fill: $primary;
+        }
+    }
+    .save-title-button {
+        margin-left: .5rem;
+    }
+}

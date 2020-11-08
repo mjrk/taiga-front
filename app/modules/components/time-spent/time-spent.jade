@@ -1,0 +1,50 @@
+
+.time-spent-wrapper(
+    ng-class="{readonly: !vm.permissions.canEdit, running: vm.timeIsRunning()}"
+    ng-if="vm.showTimeSpent()"
+)
+    tg-svg.time-spent-icon(
+        svg-icon="icon-clock"
+        svg-fill="vm.color()"
+    )
+
+    .time-spent-text.ng-animate-disabled(
+        ng-show="!vm.editMode"
+        ng-hide="vm.editMode"
+    )
+        span.detail-time-spent(
+            ng-click="vm.editTimeSpent(true)"
+            ng-if="vm.permissions.canEdit && !vm.timeIsRunning()"
+            ng-bind-html="vm.formattedTime"
+        )
+        span.detail-time-spent(
+            ng-if="vm.timeIsRunning() || !vm.permissions.canEdit"
+            ng-bind-html="vm.formattedTime"
+        )
+        a.detail-edit-time-spent(
+            href=""
+            ng-if="vm.permissions.canEdit && !vm.timeIsRunning()"
+            ng-click="vm.editTimeSpent(true)"
+        )
+            tg-svg(svg-icon="icon-edit")
+
+    .edit-time-spent-wrapper(ng-if="vm.editMode")
+        input.edit-time-spent-input(
+            type="text"
+            ng-model="vm.formattedTime"
+            maxlength="10"
+            autofocus
+            required
+            ng-keydown="vm.onKeyDown($event)"
+        )
+        button.edit-time-spent-button.save-time-spent-button(
+            ng-click="vm.saveTimeSpent()"
+            tg-loading="vm.loadingTimeSpent"
+        )
+            tg-svg(
+                svg-icon="icon-save"
+            )
+        button.edit-time-spent-button.cancel-time-spent-button(
+            ng-click="vm.cancelEdit(false)"
+        )
+            tg-svg(svg-icon="icon-close")

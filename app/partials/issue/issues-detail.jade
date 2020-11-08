@@ -105,6 +105,13 @@ div.wrapper(
             )
 
         section.ticket-section.ticket-data-container
+            div.ticket-time-spent(
+                tg-time-spent
+                item="issue"
+                project="project"
+                required-perm="modify_issue"
+                ng-if="project && issue"
+            )
             div.ticket-status(
                 tg-issue-type-button
                 ng-model="issue"
