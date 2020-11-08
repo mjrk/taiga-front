@@ -141,6 +141,14 @@ div.wrapper(
                 ng-model="us"
             )
 
+        div.ticket-time-spent(
+            tg-time-spent
+            item="us"
+            project="project"
+            required-perm="modify_us"
+            ng-if="project && us"
+        )
+
         section.ticket-section.ticket-estimation(
             tg-us-estimation
             ng-model="us"
