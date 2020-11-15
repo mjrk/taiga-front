@@ -181,6 +181,10 @@
             "WHICH_PROJECT": "Which project?",
             "MOVE_HINT": "Use with caution! Attachments are not moved and you may have to reassign color tags after the move."
         },
+        "TIME_SPENT": {
+            "LABEL": "Time",
+            "TITLE": "Time, that the document has been in progress"
+        },
         "ASSIGNED_USERS": {
             "ADD": "Select assigned user",
             "ADD_ASSIGNED": "Add assigned",

@@ -156,3 +156,18 @@ textToHTML = ($filter) ->
         return ""
 
 module.filter("textToHTML", ["$filter", textToHTML])
+
+numberToTime = ($filter) ->
+    return (timeSpent) ->
+        if not timeSpent
+            return "00:00"
+
+        hours = (timeSpent / 60);
+        full_hours = Math.floor(hours);
+        full_minutes = timeSpent - full_hours*60
+        if full_hours < 10
+            '0' + full_hours
+
+        return "#{full_hours}:#{('0'+full_minutes).slice(-2)}"
+
+module.filter("numberToTime", ["$filter", numberToTime])

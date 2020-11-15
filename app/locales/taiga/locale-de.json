@@ -179,7 +179,11 @@
             "NO_PROJECTS": "Keine Projete verfügbar",
             "SELECT_DESTINATION_PLACEHOLDER": "Ziel wählen",
             "WHICH_PROJECT": "Welche Projekt?",
-            "MOVE_HINT": "Use with caution! Attachments are not moved and you may have to reassign color tags after the move."
+            "MOVE_HINT": "Mit Vorsicht nutzen! Anhänge werden nicht verschoben und Tag-Farben müssen eventuell neu zugewiesen werden."
+        },
+        "TIME_SPENT": {
+            "LABEL": "Zeit",
+            "TITLE": "Zeit, in der sich das Dokument in Bearbeitung befand"
         },
         "ASSIGNED_USERS": {
             "ADD": "Zugewiesenen Benutzer wählen",

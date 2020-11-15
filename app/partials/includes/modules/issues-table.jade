@@ -12,6 +12,8 @@ section.issues-table.basic-table(ng-class="{empty: !issues.length}")
              | {{"ISSUES.TABLE.COLUMNS.SUBJECT" | translate}}
         div.issue-field(data-fieldname="status")
              | {{"ISSUES.TABLE.COLUMNS.STATUS" | translate}}
+        div.time-spent-field
+             | {{"COMMON.TIME_SPENT.LABEL" | translate }}
         div.modified-field(data-fieldname="modified_date")
              | {{"ISSUES.TABLE.COLUMNS.MODIFIED" | translate}}
         div.assigned-field(data-fieldname="assigned_to")
@@ -72,6 +74,9 @@ section.issues-table.basic-table(ng-class="{empty: !issues.length}")
                     tg-check-permission="modify_issue"
                     svg-icon="icon-arrow-down"
                 )
+
+        div.time-spent-field
+            span(ng-bind-html="issue.total_time_spent | numberToTime ")
 
         div.modified-field(
             title="{{ issue.modified_date|momentFormat:'DD MMM YYYY HH:mm' }}"
