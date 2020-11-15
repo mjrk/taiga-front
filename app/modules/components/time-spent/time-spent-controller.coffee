@@ -69,7 +69,7 @@ class TimeSpentController
 
     _checkPermissions: () ->
         @.permissions = {
-            canEdit: _.includes(@.project.my_permissions, @.requiredPerm)
+            canEdit: _.includes(@.project.my_permissions, @.requiredPerm) and @.project.i_am_admin,
         }
 
     cancelEdit: () ->
@@ -102,9 +102,13 @@ class TimeSpentController
             @confirm.notify('success')
             @._updateFormattedTime(@.item.time_spent_to_date)
 
-        onEditTimeSpentError = () =>
+        onEditTimeSpentError = (response) =>
             @.loadingTimeSpent = false
-            @confirm.notify('error')
+            if response._error_message
+                @confirm.notify('error', response._error_message)
+            else
+                @confirm.notify('error')
+            @._updateFormattedTime()
 
         @.editMode = false
         @.loadingTimeSpent = true
